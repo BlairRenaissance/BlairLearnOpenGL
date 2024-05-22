@@ -5,10 +5,13 @@
 //  Created by yiwen ren on 2024/5/21.
 //
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include <iostream>
 
+#include "HelloWindow.hpp"
+
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+    hello_window();
 }
