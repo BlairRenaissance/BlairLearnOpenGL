@@ -7,27 +7,13 @@
 
 // 请确认是在包含GLFW的头文件之前包含了GLAD的头文件。
 // GLAD的头文件包含了正确的OpenGL头文件（例如GL/gl.h），所以需要在其它依赖于OpenGL的头文件之前包含GLAD。
+#include "HelloWindow.hpp"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "HelloWindow.hpp"
-
-// 窗口回调函数，每次窗口大小被调整的时候被调用。
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    glViewport(0, 0, width, height);
-}
-
-// 处理键盘输入
-void processInput(GLFWwindow *window){
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
-        glfwSetWindowShouldClose(window, true);
-    }
-}
-
 
 int hello_window() {
-    
 #pragma mark 初始化窗口
     
     // 初始化GLFW。
@@ -38,7 +24,7 @@ int hello_window() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     
     // 实例化GLFW窗口。
-    GLFWwindow* window = glfwCreateWindow(800, 600, "example", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "hello window", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -229,3 +215,15 @@ int hello_window() {
     return 0;
 }
 
+// 窗口回调函数，每次窗口大小被调整的时候被调用。
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
+// 处理键盘输入
+void processInput(GLFWwindow *window){
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
+        glfwSetWindowShouldClose(window, true);
+    }
+}

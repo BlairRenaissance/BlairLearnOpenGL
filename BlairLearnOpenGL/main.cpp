@@ -11,7 +11,9 @@
 #include <iostream>
 
 #include "HelloWindow.hpp"
+#include "Transformations.hpp"
 
 int main(int argc, const char * argv[]) {
-    hello_window();
+//    hello_window();
+    transformations();
 }

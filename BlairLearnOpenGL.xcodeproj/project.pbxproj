@@ -15,6 +15,9 @@
 		D842BA302BFC991D00436058 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842BA2E2BFC98F500436058 /* Cocoa.framework */; };
 		D842BA312BFC994100436058 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842BA2A2BFC98E600436058 /* IOKit.framework */; };
 		D842BA362BFC9AE500436058 /* HelloWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA342BFC9AE500436058 /* HelloWindow.cpp */; };
+		D842BA392BFDCFFB00436058 /* Transformations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA372BFDCFFB00436058 /* Transformations.cpp */; };
+		D842BA3C2BFDD2FE00436058 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA3A2BFDD2FE00436058 /* Shader.cpp */; };
+		D842BA412BFDDECD00436058 /* libglm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D842BA402BFDDECD00436058 /* libglm.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +43,13 @@
 		D842BA2E2BFC98F500436058 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D842BA342BFC9AE500436058 /* HelloWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWindow.cpp; sourceTree = "<group>"; };
 		D842BA352BFC9AE500436058 /* HelloWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HelloWindow.hpp; sourceTree = "<group>"; };
+		D842BA372BFDCFFB00436058 /* Transformations.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transformations.cpp; sourceTree = "<group>"; };
+		D842BA382BFDCFFB00436058 /* Transformations.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Transformations.hpp; sourceTree = "<group>"; };
+		D842BA3A2BFDD2FE00436058 /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
+		D842BA3B2BFDD2FE00436058 /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
+		D842BA402BFDDECD00436058 /* libglm.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglm.dylib; path = ../../../../../opt/homebrew/Cellar/glm/1.0.1/lib/libglm.dylib; sourceTree = "<group>"; };
+		D842BA422BFDE0CF00436058 /* transform_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = transform_vs.vs; sourceTree = "<group>"; };
+		D842BA432BFDE0DD00436058 /* transform_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = transform_fs.fs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D842BA412BFDDECD00436058 /* libglm.dylib in Frameworks */,
 				D842BA272BFC985100436058 /* libglfw3.a in Frameworks */,
 				D842BA312BFC994100436058 /* IOKit.framework in Frameworks */,
 				D842BA302BFC991D00436058 /* Cocoa.framework in Frameworks */,
@@ -78,10 +89,15 @@
 		D842BA1B2BFC96AD00436058 /* BlairLearnOpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				D842BA3D2BFDD8C500436058 /* Shader */,
 				D842BA1C2BFC96AD00436058 /* main.cpp */,
 				D842BA232BFC980B00436058 /* glad.c */,
 				D842BA342BFC9AE500436058 /* HelloWindow.cpp */,
 				D842BA352BFC9AE500436058 /* HelloWindow.hpp */,
+				D842BA372BFDCFFB00436058 /* Transformations.cpp */,
+				D842BA382BFDCFFB00436058 /* Transformations.hpp */,
+				D842BA3A2BFDD2FE00436058 /* Shader.cpp */,
+				D842BA3B2BFDD2FE00436058 /* Shader.hpp */,
 			);
 			path = BlairLearnOpenGL;
 			sourceTree = "<group>";
@@ -89,6 +105,7 @@
 		D842BA252BFC985100436058 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D842BA402BFDDECD00436058 /* libglm.dylib */,
 				D842BA2E2BFC98F500436058 /* Cocoa.framework */,
 				D842BA2C2BFC98ED00436058 /* GLUT.framework */,
 				D842BA2A2BFC98E600436058 /* IOKit.framework */,
@@ -96,6 +113,15 @@
 				D842BA262BFC985100436058 /* libglfw3.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D842BA3D2BFDD8C500436058 /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				D842BA422BFDE0CF00436058 /* transform_vs.vs */,
+				D842BA432BFDE0DD00436058 /* transform_fs.fs */,
+			);
+			path = Shader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,7 +183,9 @@
 			files = (
 				D842BA1D2BFC96AD00436058 /* main.cpp in Sources */,
 				D842BA362BFC9AE500436058 /* HelloWindow.cpp in Sources */,
+				D842BA392BFDCFFB00436058 /* Transformations.cpp in Sources */,
 				D842BA242BFC980B00436058 /* glad.c in Sources */,
+				D842BA3C2BFDD2FE00436058 /* Shader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,8 +314,12 @@
 				HEADER_SEARCH_PATHS = (
 					/Users/yiwenren/Downloads/glad/include,
 					"/Users/yiwenren/Downloads/glfw-3.4.bin.MACOS/include",
+					/opt/homebrew/Cellar/glm/1.0.1/include/glm/,
 				);
-				LIBRARY_SEARCH_PATHS = "/Users/yiwenren/Downloads/glfw-3.4.bin.MACOS/lib-arm64";
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/yiwenren/Downloads/glfw-3.4.bin.MACOS/lib-arm64",
+					/opt/homebrew/Cellar/glm/1.0.1/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -299,8 +331,12 @@
 				HEADER_SEARCH_PATHS = (
 					/Users/yiwenren/Downloads/glad/include,
 					"/Users/yiwenren/Downloads/glfw-3.4.bin.MACOS/include",
+					/opt/homebrew/Cellar/glm/1.0.1/include/glm/,
 				);
-				LIBRARY_SEARCH_PATHS = "/Users/yiwenren/Downloads/glfw-3.4.bin.MACOS/lib-arm64";
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/yiwenren/Downloads/glfw-3.4.bin.MACOS/lib-arm64",
+					/opt/homebrew/Cellar/glm/1.0.1/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
