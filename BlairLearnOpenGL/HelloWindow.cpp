@@ -63,9 +63,10 @@ int hello_window() {
     
     // 定义顶点数据
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
+        // 位置              // 颜色
+         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // 右下
+        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // 左下
+         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // 顶部
     };
     
     // OpenGL的核心模式要求我们使用VAO。
@@ -91,9 +92,13 @@ int hello_window() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
     // 告诉OpenGL该如何解析顶点数据。
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    // 第一个参数对应 vertex shader 中的layout(location = 0)。
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     // 以顶点属性位置值作为参数，启用顶点属性。顶点属性默认是禁用的。
     glEnableVertexAttribArray(0);
+    // 颜色属性
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
     
     
     /** 使用索引缓冲（EBO / IBO）
@@ -124,10 +129,14 @@ int hello_window() {
     const char *vertexShaderSource = 
         "#version 330 core\n"
         "layout (location = 0) in vec3 aPos;\n"
+        "layout (location = 1) in vec3 aColor;\n"
+        "out vec3 ourColor;"
         "void main()\n"
         "{\n"
-        "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+        "   gl_Position = vec4(aPos, 1.0);\n"
+        "   ourColor = aColor;\n"
         "}\0";
+    
     unsigned int vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
     // 第一个参数是要编译的着色器对象。
@@ -146,11 +155,14 @@ int hello_window() {
     
     const char *fragmentShaderSource =
         "#version 330 core\n"
+        "uniform vec4 setColor;\n"
         "out vec4 FragColor;\n"
+        "in vec3 ourColor;\n"
         "void main()\n"
         "{\n"
-        "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+        "   FragColor = vec4(ourColor, 1.0);\n"
         "}\n\0";
+    
     unsigned int fragmentShader;
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
@@ -191,8 +203,13 @@ int hello_window() {
         // 输入
         processInput(window);
         
-        // 渲染指令
         glClear(GL_COLOR_BUFFER_BIT);
+        
+        double timeValue = glfwGetTime();
+        float greenValue = static_cast<float>(sin(timeValue) / 2.0 + 0.5);
+        int vertexColorLocation = glGetUniformLocation(shaderProgram, "setColor");
+        glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+        
         glDrawArrays(GL_TRIANGLES, 0, 3);
         
         /** 使用索引缓冲（EBO / IBO）
