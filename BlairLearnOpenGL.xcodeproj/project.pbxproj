@@ -102,17 +102,11 @@
 		D842BA1B2BFC96AD00436058 /* BlairLearnOpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				D842BA512C082AAA00436058 /* Core */,
 				D842BA3D2BFDD8C500436058 /* Shader */,
 				D842BA1C2BFC96AD00436058 /* main.cpp */,
-				D842BA442C04742000436058 /* stb_image.h */,
-				D842BA452C04745600436058 /* stb_image.cpp */,
-				D842BA232BFC980B00436058 /* glad.c */,
-				D842BA4E2C05B04800436058 /* BaseFunction.cpp */,
-				D842BA4F2C05B04800436058 /* BaseFunction.hpp */,
 				D842BA342BFC9AE500436058 /* HelloWindow.cpp */,
 				D842BA352BFC9AE500436058 /* HelloWindow.hpp */,
-				D842BA3A2BFDD2FE00436058 /* Shader.cpp */,
-				D842BA3B2BFDD2FE00436058 /* Shader.hpp */,
 				D842BA372BFDCFFB00436058 /* Texture.cpp */,
 				D842BA382BFDCFFB00436058 /* Texture.hpp */,
 				D842BA4B2C04AC7B00436058 /* Coordinate.cpp */,
@@ -151,6 +145,20 @@
 				D842BA4A2C048A2A00436058 /* container.jpg */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		D842BA512C082AAA00436058 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				D842BA442C04742000436058 /* stb_image.h */,
+				D842BA452C04745600436058 /* stb_image.cpp */,
+				D842BA232BFC980B00436058 /* glad.c */,
+				D842BA4E2C05B04800436058 /* BaseFunction.cpp */,
+				D842BA4F2C05B04800436058 /* BaseFunction.hpp */,
+				D842BA3A2BFDD2FE00436058 /* Shader.cpp */,
+				D842BA3B2BFDD2FE00436058 /* Shader.hpp */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
