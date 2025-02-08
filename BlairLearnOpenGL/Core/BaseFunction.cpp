@@ -35,7 +35,6 @@ GLFWwindow* CreateWindowContext()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     
     // 实例化GLFW窗口。
-    
     GLFWwindow* window = glfwCreateWindow(800, 600, "hello window", NULL, NULL);
     if (window == NULL)
     {
@@ -52,9 +51,9 @@ GLFWwindow* CreateWindowContext()
         return nullptr;
     }
     
-    glViewport(0, 0, 800, 600);
+//    glViewport(0, 0, 800, 600);
     // 注册窗口大小调整回调。
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+//    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     
     return window;
 }

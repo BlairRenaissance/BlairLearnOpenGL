@@ -14,10 +14,10 @@
 #include <sstream>
 #include <iostream>
 #include <stdio.h>
-
 class Shader{
+
 public:
-    unsigned int ID;
+    unsigned int shaderProgramID;
     
     Shader(const char* vertexPath, const char* fragmentPath);
     void use();

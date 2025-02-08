@@ -5,7 +5,7 @@
 //  Created by yiwen ren on 2024/5/22.
 //
 
-#include "Texture.hpp"
+#include "2_Texture.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -21,7 +21,7 @@ int texture()
     
 #pragma mark 配置
     
-    Shader ourShader("Shader/texture_vs.vs", "Shader/texture_fs.fs");
+    Shader textureShader("Shader/texture_vs.vs", "Shader/texture_fs.fs");
 
     float vertices[] = {
         // positions          // colors           // texture coords
@@ -34,16 +34,16 @@ int texture()
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
+    
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
     glBindVertexArray(VAO);
 
+    glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+    glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
@@ -114,10 +114,10 @@ int texture()
     stbi_image_free(data);
     
     // 一定别忘了设置前先激活着色器！！！！！
-    ourShader.use();
+    textureShader.use();
     // 通过glUniform1i设置每个着色器采样器属于哪个纹理单元(GL_TEXTURE0/1/../15)
-    glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
-    glUniform1i(glGetUniformLocation(ourShader.ID, "texture2"), 1);
+    glUniform1i(glGetUniformLocation(textureShader.shaderProgramID, "texture1"), 0);
+    glUniform1i(glGetUniformLocation(textureShader.shaderProgramID, "texture2"), 1);
     
     
 #pragma mark 渲染Loop

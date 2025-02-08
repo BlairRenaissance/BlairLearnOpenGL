@@ -14,12 +14,12 @@
 		D842BA2D2BFC98ED00436058 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842BA2C2BFC98ED00436058 /* GLUT.framework */; };
 		D842BA302BFC991D00436058 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842BA2E2BFC98F500436058 /* Cocoa.framework */; };
 		D842BA312BFC994100436058 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842BA2A2BFC98E600436058 /* IOKit.framework */; };
-		D842BA362BFC9AE500436058 /* HelloWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA342BFC9AE500436058 /* HelloWindow.cpp */; };
-		D842BA392BFDCFFB00436058 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA372BFDCFFB00436058 /* Texture.cpp */; };
+		D842BA362BFC9AE500436058 /* 1_HelloWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA342BFC9AE500436058 /* 1_HelloWindow.cpp */; };
+		D842BA392BFDCFFB00436058 /* 2_Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA372BFDCFFB00436058 /* 2_Texture.cpp */; };
 		D842BA3C2BFDD2FE00436058 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA3A2BFDD2FE00436058 /* Shader.cpp */; };
 		D842BA412BFDDECD00436058 /* libglm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D842BA402BFDDECD00436058 /* libglm.dylib */; };
 		D842BA462C04745600436058 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA452C04745600436058 /* stb_image.cpp */; };
-		D842BA4D2C04AC7B00436058 /* Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA4B2C04AC7B00436058 /* Coordinate.cpp */; };
+		D842BA4D2C04AC7B00436058 /* 3_Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA4B2C04AC7B00436058 /* 3_Coordinate.cpp */; };
 		D842BA502C05B04800436058 /* BaseFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA4E2C05B04800436058 /* BaseFunction.cpp */; };
 /* End PBXBuildFile section */
 
@@ -44,10 +44,10 @@
 		D842BA2A2BFC98E600436058 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		D842BA2C2BFC98ED00436058 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		D842BA2E2BFC98F500436058 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		D842BA342BFC9AE500436058 /* HelloWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWindow.cpp; sourceTree = "<group>"; };
-		D842BA352BFC9AE500436058 /* HelloWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HelloWindow.hpp; sourceTree = "<group>"; };
-		D842BA372BFDCFFB00436058 /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
-		D842BA382BFDCFFB00436058 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
+		D842BA342BFC9AE500436058 /* 1_HelloWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = 1_HelloWindow.cpp; sourceTree = "<group>"; };
+		D842BA352BFC9AE500436058 /* 1_HelloWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = 1_HelloWindow.hpp; sourceTree = "<group>"; };
+		D842BA372BFDCFFB00436058 /* 2_Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = 2_Texture.cpp; sourceTree = "<group>"; };
+		D842BA382BFDCFFB00436058 /* 2_Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = 2_Texture.hpp; sourceTree = "<group>"; };
 		D842BA3A2BFDD2FE00436058 /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		D842BA3B2BFDD2FE00436058 /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
 		D842BA402BFDDECD00436058 /* libglm.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglm.dylib; path = ../../../../../opt/homebrew/Cellar/glm/1.0.1/lib/libglm.dylib; sourceTree = "<group>"; };
@@ -58,10 +58,12 @@
 		D842BA482C04755C00436058 /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		D842BA492C04815B00436058 /* awesomeface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = awesomeface.png; sourceTree = "<group>"; };
 		D842BA4A2C048A2A00436058 /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container.jpg; sourceTree = "<group>"; };
-		D842BA4B2C04AC7B00436058 /* Coordinate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Coordinate.cpp; sourceTree = "<group>"; };
-		D842BA4C2C04AC7B00436058 /* Coordinate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Coordinate.hpp; sourceTree = "<group>"; };
+		D842BA4B2C04AC7B00436058 /* 3_Coordinate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = 3_Coordinate.cpp; sourceTree = "<group>"; };
+		D842BA4C2C04AC7B00436058 /* 3_Coordinate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = 3_Coordinate.hpp; sourceTree = "<group>"; };
 		D842BA4E2C05B04800436058 /* BaseFunction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BaseFunction.cpp; sourceTree = "<group>"; };
 		D842BA4F2C05B04800436058 /* BaseFunction.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseFunction.hpp; sourceTree = "<group>"; };
+		D842BA912C187CFC00436058 /* transform_vs.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = transform_vs.vs; sourceTree = "<group>"; };
+		D842BA922C187D1300436058 /* transform_fs.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = transform_fs.fs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,12 +107,12 @@
 				D842BA512C082AAA00436058 /* Core */,
 				D842BA3D2BFDD8C500436058 /* Shader */,
 				D842BA1C2BFC96AD00436058 /* main.cpp */,
-				D842BA342BFC9AE500436058 /* HelloWindow.cpp */,
-				D842BA352BFC9AE500436058 /* HelloWindow.hpp */,
-				D842BA372BFDCFFB00436058 /* Texture.cpp */,
-				D842BA382BFDCFFB00436058 /* Texture.hpp */,
-				D842BA4B2C04AC7B00436058 /* Coordinate.cpp */,
-				D842BA4C2C04AC7B00436058 /* Coordinate.hpp */,
+				D842BA342BFC9AE500436058 /* 1_HelloWindow.cpp */,
+				D842BA352BFC9AE500436058 /* 1_HelloWindow.hpp */,
+				D842BA372BFDCFFB00436058 /* 2_Texture.cpp */,
+				D842BA382BFDCFFB00436058 /* 2_Texture.hpp */,
+				D842BA4B2C04AC7B00436058 /* 3_Coordinate.cpp */,
+				D842BA4C2C04AC7B00436058 /* 3_Coordinate.hpp */,
 			);
 			path = BlairLearnOpenGL;
 			sourceTree = "<group>";
@@ -133,6 +135,8 @@
 			children = (
 				D842BA422BFDE0CF00436058 /* texture_vs.vs */,
 				D842BA432BFDE0DD00436058 /* texture_fs.fs */,
+				D842BA912C187CFC00436058 /* transform_vs.vs */,
+				D842BA922C187D1300436058 /* transform_fs.fs */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -219,10 +223,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D842BA1D2BFC96AD00436058 /* main.cpp in Sources */,
-				D842BA362BFC9AE500436058 /* HelloWindow.cpp in Sources */,
+				D842BA362BFC9AE500436058 /* 1_HelloWindow.cpp in Sources */,
 				D842BA502C05B04800436058 /* BaseFunction.cpp in Sources */,
-				D842BA4D2C04AC7B00436058 /* Coordinate.cpp in Sources */,
-				D842BA392BFDCFFB00436058 /* Texture.cpp in Sources */,
+				D842BA4D2C04AC7B00436058 /* 3_Coordinate.cpp in Sources */,
+				D842BA392BFDCFFB00436058 /* 2_Texture.cpp in Sources */,
 				D842BA462C04745600436058 /* stb_image.cpp in Sources */,
 				D842BA242BFC980B00436058 /* glad.c in Sources */,
 				D842BA3C2BFDD2FE00436058 /* Shader.cpp in Sources */,
@@ -352,12 +356,12 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
-					/Users/yiwenren/Downloads/glad/include,
-					"/Users/yiwenren/Downloads/glfw-3.4.bin.MACOS/include",
+					/Users/yiwenren/Project/Practice/BlairLearnOpenGL/Resource/glad/include,
+					/opt/homebrew/Cellar/glfw/3.4/include,
 					/opt/homebrew/Cellar/glm/1.0.1/include/glm/,
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"/Users/yiwenren/Downloads/glfw-3.4.bin.MACOS/lib-arm64",
+					/opt/homebrew/Cellar/glfw/3.4/lib,
 					/opt/homebrew/Cellar/glm/1.0.1/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -369,12 +373,12 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
-					/Users/yiwenren/Downloads/glad/include,
-					"/Users/yiwenren/Downloads/glfw-3.4.bin.MACOS/include",
+					/Users/yiwenren/Project/Practice/BlairLearnOpenGL/Resource/glad/include,
+					/opt/homebrew/Cellar/glfw/3.4/include,
 					/opt/homebrew/Cellar/glm/1.0.1/include/glm/,
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"/Users/yiwenren/Downloads/glfw-3.4.bin.MACOS/lib-arm64",
+					/opt/homebrew/Cellar/glfw/3.4/lib,
 					/opt/homebrew/Cellar/glm/1.0.1/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";

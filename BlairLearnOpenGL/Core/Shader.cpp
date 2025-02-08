@@ -19,7 +19,6 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath){
     fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     
     try{
-        
         // Read vertex shader file
         vShaderFile.open(vertexPath);
         std::stringstream vShaderStream;
@@ -53,14 +52,14 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath){
     glCompileShader(fragmentShader);
     
 #pragma mark 创建Program
-    ID = glCreateProgram();
-    glAttachShader(ID, vertexShader);
-    glAttachShader(ID, fragmentShader);
-    glLinkProgram(ID);
+    shaderProgramID = glCreateProgram();
+    glAttachShader(shaderProgramID, vertexShader);
+    glAttachShader(shaderProgramID, fragmentShader);
+    glLinkProgram(shaderProgramID);
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 }
 
 void Shader::use(){
-    glUseProgram(ID);
+    glUseProgram(shaderProgramID);
 }
