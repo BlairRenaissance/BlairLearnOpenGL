@@ -92,9 +92,12 @@ int coordinate()
     stbi_image_free(data);
     
     transformShader.use();
+    
+    // 通过glUniform1i设置每个着色器采样器属于哪个纹理单元(GL_TEXTURE0/1/../15)
     glUniform1i(glGetUniformLocation(transformShader.shaderProgramID, "texture1"), 0);
     glUniform1i(glGetUniformLocation(transformShader.shaderProgramID, "texture2"), 1);
     
+#pragma mark 渲染loop
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
         glClearColor(0.0, 0.0, 0.0, 1.0);

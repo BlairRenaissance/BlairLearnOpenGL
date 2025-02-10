@@ -11,7 +11,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
@@ -44,16 +43,12 @@ GLFWwindow* CreateWindowContext()
     }
     glfwMakeContextCurrent(window);
     
-    // 在调用任何OpenGL的函数之前我们需要初始化GLAD。
+    // 在 OpenGL 中，GLAD 是一个用于加载 OpenGL 函数指针的库。由于 OpenGL 函数在运行时才被加载，因此在调用任何 OpenGL 函数之前，必须先初始化 GLAD。
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return nullptr;
     }
-    
-//    glViewport(0, 0, 800, 600);
-    // 注册窗口大小调整回调。
-//    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     
     return window;
 }

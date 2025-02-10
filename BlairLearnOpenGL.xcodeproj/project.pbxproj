@@ -21,6 +21,7 @@
 		D842BA462C04745600436058 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA452C04745600436058 /* stb_image.cpp */; };
 		D842BA4D2C04AC7B00436058 /* 3_Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA4B2C04AC7B00436058 /* 3_Coordinate.cpp */; };
 		D842BA502C05B04800436058 /* BaseFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA4E2C05B04800436058 /* BaseFunction.cpp */; };
+		D8C782B32D578577005D4641 /* 4_Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8C782B12D578577005D4641 /* 4_Camera.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -64,6 +65,10 @@
 		D842BA4F2C05B04800436058 /* BaseFunction.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseFunction.hpp; sourceTree = "<group>"; };
 		D842BA912C187CFC00436058 /* transform_vs.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = transform_vs.vs; sourceTree = "<group>"; };
 		D842BA922C187D1300436058 /* transform_fs.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = transform_fs.fs; sourceTree = "<group>"; };
+		D8C782B12D578577005D4641 /* 4_Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = 4_Camera.cpp; sourceTree = "<group>"; };
+		D8C782B22D578577005D4641 /* 4_Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = 4_Camera.hpp; sourceTree = "<group>"; };
+		D8C782B42D578685005D4641 /* camera_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = camera_fs.fs; sourceTree = "<group>"; };
+		D8C782B52D578685005D4641 /* camera_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = camera_vs.vs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +118,8 @@
 				D842BA382BFDCFFB00436058 /* 2_Texture.hpp */,
 				D842BA4B2C04AC7B00436058 /* 3_Coordinate.cpp */,
 				D842BA4C2C04AC7B00436058 /* 3_Coordinate.hpp */,
+				D8C782B12D578577005D4641 /* 4_Camera.cpp */,
+				D8C782B22D578577005D4641 /* 4_Camera.hpp */,
 			);
 			path = BlairLearnOpenGL;
 			sourceTree = "<group>";
@@ -133,6 +140,8 @@
 		D842BA3D2BFDD8C500436058 /* Shader */ = {
 			isa = PBXGroup;
 			children = (
+				D8C782B42D578685005D4641 /* camera_fs.fs */,
+				D8C782B52D578685005D4641 /* camera_vs.vs */,
 				D842BA422BFDE0CF00436058 /* texture_vs.vs */,
 				D842BA432BFDE0DD00436058 /* texture_fs.fs */,
 				D842BA912C187CFC00436058 /* transform_vs.vs */,
@@ -224,6 +233,7 @@
 			files = (
 				D842BA1D2BFC96AD00436058 /* main.cpp in Sources */,
 				D842BA362BFC9AE500436058 /* 1_HelloWindow.cpp in Sources */,
+				D8C782B32D578577005D4641 /* 4_Camera.cpp in Sources */,
 				D842BA502C05B04800436058 /* BaseFunction.cpp in Sources */,
 				D842BA4D2C04AC7B00436058 /* 3_Coordinate.cpp in Sources */,
 				D842BA392BFDCFFB00436058 /* 2_Texture.cpp in Sources */,
