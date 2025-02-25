@@ -21,4 +21,8 @@ void processInput(GLFWwindow *window);
 // 初始化窗口。
 GLFWwindow* CreateWindowContext();
 
+GLFWwindow* CreateWindowContextWithParam(const unsigned int SCR_WIDTH = 800, 
+                                const unsigned int SCR_HEIGHT = 600,
+                                const char* windowName = "Hello window");
+
 #endif /* BaseFunction_hpp */

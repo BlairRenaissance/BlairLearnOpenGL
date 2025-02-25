@@ -38,8 +38,8 @@ int coordinate()
     
 #pragma mark 设置缓冲区
     unsigned int VBO, VAO, EBO;
+    // 注意这里不是GenBuffer！而是GenVertexArrays！！
     glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
     
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -49,6 +49,7 @@ int coordinate()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
+    glBindVertexArray(VAO);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));

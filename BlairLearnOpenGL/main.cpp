@@ -10,17 +10,18 @@
 #include <iostream>
 
 #include "BaseFunction.hpp"
-#include "1_HelloWindow.hpp"
-#include "2_Texture.hpp"
-#include "3_Coordinate.hpp"
-#include "4_Camera.hpp"
-
+//#include "1_HelloWindow.hpp"
+//#include "2_Texture.hpp"
+//#include "3_Coordinate.hpp"
+//#include "4_Camera.hpp"
+#include "5_PhongLight.hpp"
 
 int main(int argc, const char * argv[]) {
 //    hello_window();
 //    texture();
 //    coordinate();
-    camera();
+//    camera();
+    phongLight();
     
     int uniform_count = 0;
     glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &uniform_count);

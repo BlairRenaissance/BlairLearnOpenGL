@@ -17,33 +17,24 @@
 #include "stb_image.h"
 #include "BaseFunction.hpp"
 #include "Shader.hpp"
-
+#include "Camera.hpp"
 
 #pragma mark 鼠标参数
-bool firstMouse = true;
-float fov = 45.0f;
-float yaw   = -90.0f;    // yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
-float pitch =  0.0f;
-float lastX =  800.0f / 2.0;
-float lastY =  600.0 / 2.0;
-void mouse_callback(GLFWwindow *window, double xposIn, double yposIn);
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+// 为了避免编译冲突
+//void mouse_callback(GLFWwindow *window, double xposIn, double yposIn);
+//void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 
-#pragma mark 相机参数
-// camera
-glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f, 0.0f);
+Camera cameraParam(glm::vec3(0.0f, 0.0f, 3.0f));
 
 int camera()
 {
     GLFWwindow* window = CreateWindowContext();
+//    glfwSetCursorPosCallback(window, mouse_callback);
+//    glfwSetScrollCallback(window, scroll_callback);
     
-    glfwSetCursorPosCallback(window, mouse_callback);
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    glfwSetScrollCallback(window, scroll_callback);
     
     Shader cameraShader("Shader/camera_vs.vs", "Shader/camera_fs.fs");
     
@@ -177,8 +168,8 @@ int camera()
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
         
-        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-        projection = glm::perspective(glm::radians(fov), 800.0f/600.0f, 0.1f, 100.0f); // 第二个参数是宽高比
+        view = cameraParam.GetViewMatrix();
+        projection = glm::perspective(glm::radians(cameraParam.Fov), 800.0f/600.0f, 0.1f, 100.0f); // 第二个参数是宽高比
         
         // 接口解析见Topic3
         glUniformMatrix4fv(glGetUniformLocation(cameraShader.shaderProgramID, "view"), 1, 0, glm::value_ptr(view));
@@ -209,50 +200,28 @@ int camera()
     return 0;
 }
 
-
-void mouse_callback(GLFWwindow *window, double xposIn, double yposIn){
-    float xpos = static_cast<float>(xposIn);
-    float ypos = static_cast<float>(yposIn);
-
-    if (firstMouse)
-    {
-        lastX = xpos;
-        lastY = ypos;
-        firstMouse = false;
-    }
-
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-    std::cout << "lastY: " << lastY << " ypos: " << ypos << std::endl;
-    
-    lastX = xpos;
-    lastY = ypos;
-
-    float sensitivity = 0.1f; // change this value to your liking
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
-
-    yaw += xoffset;
-    pitch += yoffset;
-
-    // make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (pitch > 89.0f)
-        pitch = 89.0f;
-    if (pitch < -89.0f)
-        pitch = -89.0f;
-
-    glm::vec3 front;
-    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    front.y = sin(glm::radians(pitch));
-    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    cameraFront = glm::normalize(front);
-}
-
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-    fov -= (float)yoffset;
-    if (fov < 1.0f)
-        fov = 1.0f;
-    if (fov > 45.0f)
-        fov = 45.0f;
-}
+// 为了避免编译冲突
+//void mouse_callback(GLFWwindow *window, double xposIn, double yposIn){
+//    float xpos = static_cast<float>(xposIn);
+//    float ypos = static_cast<float>(yposIn);
+//
+//    if (cameraParam.firstMouse)
+//    {
+//        cameraParam.lastX = xpos;
+//        cameraParam.lastY = ypos;
+//        cameraParam.firstMouse = false;
+//    }
+//
+//    float xoffset = xpos - cameraParam.lastX;
+//    float yoffset = cameraParam.lastY - ypos; // reversed since y-coordinates go from bottom to top
+//    
+//    cameraParam.lastX = xpos;
+//    cameraParam.lastY = ypos;
+//    
+//    cameraParam.ProcessMouseMovement(xoffset, yoffset);
+//}
+//
+//void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+//{
+//    cameraParam.ProcessMouseScroll(yoffset);
+//}

@@ -22,6 +22,8 @@
 		D842BA4D2C04AC7B00436058 /* 3_Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA4B2C04AC7B00436058 /* 3_Coordinate.cpp */; };
 		D842BA502C05B04800436058 /* BaseFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BA4E2C05B04800436058 /* BaseFunction.cpp */; };
 		D8C782B32D578577005D4641 /* 4_Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8C782B12D578577005D4641 /* 4_Camera.cpp */; };
+		D8C782B92D5A0529005D4641 /* 5_PhongLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8C782B72D5A0529005D4641 /* 5_PhongLight.cpp */; };
+		D8C782C22D5A2112005D4641 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8C782C02D5A2112005D4641 /* Camera.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,6 +71,14 @@
 		D8C782B22D578577005D4641 /* 4_Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = 4_Camera.hpp; sourceTree = "<group>"; };
 		D8C782B42D578685005D4641 /* camera_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = camera_fs.fs; sourceTree = "<group>"; };
 		D8C782B52D578685005D4641 /* camera_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = camera_vs.vs; sourceTree = "<group>"; };
+		D8C782B72D5A0529005D4641 /* 5_PhongLight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = 5_PhongLight.cpp; sourceTree = "<group>"; };
+		D8C782B82D5A0529005D4641 /* 5_PhongLight.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = 5_PhongLight.hpp; sourceTree = "<group>"; };
+		D8C782BC2D5A18A4005D4641 /* phongLight_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = phongLight_fs.fs; sourceTree = "<group>"; };
+		D8C782BD2D5A18A4005D4641 /* phongLight_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = phongLight_vs.vs; sourceTree = "<group>"; };
+		D8C782BE2D5A1ADD005D4641 /* phongCube_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = phongCube_vs.vs; sourceTree = "<group>"; };
+		D8C782BF2D5A1ADD005D4641 /* phongCube_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = phongCube_fs.fs; sourceTree = "<group>"; };
+		D8C782C02D5A2112005D4641 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		D8C782C12D5A2112005D4641 /* Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +130,8 @@
 				D842BA4C2C04AC7B00436058 /* 3_Coordinate.hpp */,
 				D8C782B12D578577005D4641 /* 4_Camera.cpp */,
 				D8C782B22D578577005D4641 /* 4_Camera.hpp */,
+				D8C782B72D5A0529005D4641 /* 5_PhongLight.cpp */,
+				D8C782B82D5A0529005D4641 /* 5_PhongLight.hpp */,
 			);
 			path = BlairLearnOpenGL;
 			sourceTree = "<group>";
@@ -146,6 +158,10 @@
 				D842BA432BFDE0DD00436058 /* texture_fs.fs */,
 				D842BA912C187CFC00436058 /* transform_vs.vs */,
 				D842BA922C187D1300436058 /* transform_fs.fs */,
+				D8C782BC2D5A18A4005D4641 /* phongLight_fs.fs */,
+				D8C782BD2D5A18A4005D4641 /* phongLight_vs.vs */,
+				D8C782BF2D5A1ADD005D4641 /* phongCube_fs.fs */,
+				D8C782BE2D5A1ADD005D4641 /* phongCube_vs.vs */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -170,6 +186,8 @@
 				D842BA4F2C05B04800436058 /* BaseFunction.hpp */,
 				D842BA3A2BFDD2FE00436058 /* Shader.cpp */,
 				D842BA3B2BFDD2FE00436058 /* Shader.hpp */,
+				D8C782C02D5A2112005D4641 /* Camera.cpp */,
+				D8C782C12D5A2112005D4641 /* Camera.hpp */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -235,9 +253,11 @@
 				D842BA362BFC9AE500436058 /* 1_HelloWindow.cpp in Sources */,
 				D8C782B32D578577005D4641 /* 4_Camera.cpp in Sources */,
 				D842BA502C05B04800436058 /* BaseFunction.cpp in Sources */,
+				D8C782C22D5A2112005D4641 /* Camera.cpp in Sources */,
 				D842BA4D2C04AC7B00436058 /* 3_Coordinate.cpp in Sources */,
 				D842BA392BFDCFFB00436058 /* 2_Texture.cpp in Sources */,
 				D842BA462C04745600436058 /* stb_image.cpp in Sources */,
+				D8C782B92D5A0529005D4641 /* 5_PhongLight.cpp in Sources */,
 				D842BA242BFC980B00436058 /* glad.c in Sources */,
 				D842BA3C2BFDD2FE00436058 /* Shader.cpp in Sources */,
 			);
