@@ -39,6 +39,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D828C58C2D6D70EF0056E04A /* container2_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2_specular.png; sourceTree = "<group>"; };
+		D828C58D2D6D70EF0056E04A /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
+		D828C58E2D6D761E0056E04A /* matrix.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = matrix.jpg; sourceTree = "<group>"; };
 		D842BA192BFC96AD00436058 /* BlairLearnOpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BlairLearnOpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		D842BA1C2BFC96AD00436058 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D842BA232BFC980B00436058 /* glad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glad.c; sourceTree = "<group>"; };
@@ -169,6 +172,9 @@
 		D842BA472C04754300436058 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				D828C58E2D6D761E0056E04A /* matrix.jpg */,
+				D828C58C2D6D70EF0056E04A /* container2_specular.png */,
+				D828C58D2D6D70EF0056E04A /* container2.png */,
 				D842BA492C04815B00436058 /* awesomeface.png */,
 				D842BA482C04755C00436058 /* wall.jpg */,
 				D842BA4A2C048A2A00436058 /* container.jpg */,

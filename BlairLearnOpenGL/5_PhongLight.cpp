@@ -111,26 +111,28 @@ int phongLight(){
     
 #pragma mark 纹理1
     
-    unsigned int texture1, texture2;
     int width, height, nrChannels;
     
-    glGenTextures(1, &texture1);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    unsigned int diffuseTexture;
+    glGenTextures(1, &diffuseTexture);
+    glBindTexture(GL_TEXTURE_2D, diffuseTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    unsigned char* data = stbi_load("../Resource/container.jpg", &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load("../Resource/container2.png", &width, &height, &nrChannels, 0);
     if(data){
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     }else{
         std::cout << "Failed to load texture1" << std::endl;
     }
     stbi_image_free(data);
     
 #pragma mark 纹理2
-    glGenTextures(1, &texture2);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    
+    unsigned int specularTexture;
+    glGenTextures(1, &specularTexture);
+    glBindTexture(GL_TEXTURE_2D, specularTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -138,7 +140,7 @@ int phongLight(){
     
     // 图片原点在左上角，但OpenGL的原点在左下角
     stbi_set_flip_vertically_on_load(true);
-    data = stbi_load("../Resource/awesomeface.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("../Resource/container2_specular.png", &width, &height, &nrChannels, 0);
     if(data){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     }else{
@@ -146,10 +148,32 @@ int phongLight(){
     }
     stbi_image_free(data);
     
+    
+#pragma mark 纹理3
+    
+    unsigned int emissionTexture;
+    glGenTextures(1, &emissionTexture);
+    glBindTexture(GL_TEXTURE_2D, emissionTexture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    
+    // 图片原点在左上角，但OpenGL的原点在左下角
+    stbi_set_flip_vertically_on_load(true);
+    data = stbi_load("../Resource/matrix.jpg", &width, &height, &nrChannels, 0);
+    if(data){
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    }else{
+        std::cout << "Failed to load texture2" << std::endl;
+    }
+    stbi_image_free(data);
+    
     cubeShader.use();
     // 通过glUniform1i设置每个着色器采样器属于哪个纹理单元(GL_TEXTURE0/1/../15)
-    glUniform1i(glGetUniformLocation(cubeShader.shaderProgramID, "texture1"), 0);
-    glUniform1i(glGetUniformLocation(cubeShader.shaderProgramID, "texture2"), 1);
+    glUniform1i(glGetUniformLocation(cubeShader.shaderProgramID, "material.diffuse"), 0);
+    glUniform1i(glGetUniformLocation(cubeShader.shaderProgramID, "material.specular"), 1);
+    glUniform1i(glGetUniformLocation(cubeShader.shaderProgramID, "material.emission"), 2);
     
     
 #pragma mark 渲染loop
@@ -172,14 +196,16 @@ int phongLight(){
         glUniformMatrix4fv(glGetUniformLocation(cubeShader.shaderProgramID, "view"), 1, 0, glm::value_ptr(view));
         glUniformMatrix4fv(glGetUniformLocation(cubeShader.shaderProgramID, "projection"), 1, 0, glm::value_ptr(projection));
 
-        glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "lightColor"), 1.0f, 1.0f, 1.0f);
+        glUniform1f(glGetUniformLocation(cubeShader.shaderProgramID, "material.shininess"), 64.0f);
         glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
         glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "viewPos"), camera.Position.x, camera.Position.y, camera.Position.z);
         
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture1);
+        glBindTexture(GL_TEXTURE_2D, diffuseTexture);
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture2);
+        glBindTexture(GL_TEXTURE_2D, specularTexture);
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, emissionTexture);
         
         glBindVertexArray(cubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -190,7 +216,7 @@ int phongLight(){
         // 正常的变换顺序应该是先rotate再scale再translate
         // 但这里的目的只是移动到一个位置再让盒子小一点，所以没必要了
         model = glm::translate(model, lightPos);
-        model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
+        model = glm::scale(model, glm::vec3(0.1f)); // a smaller cube
         
         glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgramID, "model"), 1, 0, glm::value_ptr(model));
         glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgramID, "view"), 1, 0, glm::value_ptr(view));
