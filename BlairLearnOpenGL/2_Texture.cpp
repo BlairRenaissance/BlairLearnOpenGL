@@ -127,18 +127,18 @@ int texture()
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
-
-            glClear(GL_COLOR_BUFFER_BIT);
-            
-            // 如果只有一张纹理，不用调用激活纹理单元，纹理单元GL_TEXTURE0默认总是被激活。
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, texture1);
-            glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, texture2);
-
-            glBindVertexArray(VAO);
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
+        
+        glClear(GL_COLOR_BUFFER_BIT);
+        
+        // 如果只有一张纹理，不用调用激活纹理单元，纹理单元GL_TEXTURE0默认总是被激活。
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture2);
+        
+        glBindVertexArray(VAO);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

@@ -14,14 +14,17 @@
 //#include "2_Texture.hpp"
 //#include "3_Coordinate.hpp"
 //#include "4_Camera.hpp"
-#include "5_PhongLight.hpp"
+//#include "5_PhongLight.hpp"
+#include "6_LightCaster.hpp"
+
 
 int main(int argc, const char * argv[]) {
 //    hello_window();
 //    texture();
 //    coordinate();
 //    camera();
-    phongLight();
+//    phongLight();
+    lightCaster();
     
     int uniform_count = 0;
     glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &uniform_count);

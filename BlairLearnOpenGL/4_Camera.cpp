@@ -17,22 +17,14 @@
 #include "stb_image.h"
 #include "BaseFunction.hpp"
 #include "Shader.hpp"
-#include "Camera.hpp"
-
-#pragma mark 鼠标参数
-// 为了避免编译冲突
-//void mouse_callback(GLFWwindow *window, double xposIn, double yposIn);
-//void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
-
-Camera cameraParam(glm::vec3(0.0f, 0.0f, 3.0f));
 
 int camera()
 {
     GLFWwindow* window = CreateWindowContext();
-//    glfwSetCursorPosCallback(window, mouse_callback);
-//    glfwSetScrollCallback(window, scroll_callback);
+    BaseFunction& baseFunction = BaseFunction::getInstance();
     
+    glfwSetCursorPosCallback(window, BaseFunction::mouse_callback);
+    glfwSetScrollCallback(window, BaseFunction::scroll_callback);
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
@@ -156,7 +148,11 @@ int camera()
     
 #pragma mark 渲染loop
     while(!glfwWindowShouldClose(window)){
-        processInput(window);
+        float currentFrame = static_cast<float>(glfwGetTime());
+        baseFunction.cameraEntity.deltaTime = currentFrame - baseFunction.cameraEntity.lastFrame;
+        baseFunction.cameraEntity.lastFrame = currentFrame;
+        baseFunction.cameraEntity.ProcessInput(window, baseFunction.cameraEntity.deltaTime);
+        
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
@@ -168,8 +164,8 @@ int camera()
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
         
-        view = cameraParam.GetViewMatrix();
-        projection = glm::perspective(glm::radians(cameraParam.Fov), 800.0f/600.0f, 0.1f, 100.0f); // 第二个参数是宽高比
+        view = baseFunction.cameraEntity.GetViewMatrix();
+        projection = glm::perspective(glm::radians(baseFunction.cameraEntity.fov), 800.0f/600.0f, 0.1f, 100.0f); // 第二个参数是宽高比
         
         // 接口解析见Topic3
         glUniformMatrix4fv(glGetUniformLocation(cameraShader.shaderProgramID, "view"), 1, 0, glm::value_ptr(view));
@@ -199,29 +195,3 @@ int camera()
     glfwTerminate();
     return 0;
 }
-
-// 为了避免编译冲突
-//void mouse_callback(GLFWwindow *window, double xposIn, double yposIn){
-//    float xpos = static_cast<float>(xposIn);
-//    float ypos = static_cast<float>(yposIn);
-//
-//    if (cameraParam.firstMouse)
-//    {
-//        cameraParam.lastX = xpos;
-//        cameraParam.lastY = ypos;
-//        cameraParam.firstMouse = false;
-//    }
-//
-//    float xoffset = xpos - cameraParam.lastX;
-//    float yoffset = cameraParam.lastY - ypos; // reversed since y-coordinates go from bottom to top
-//    
-//    cameraParam.lastX = xpos;
-//    cameraParam.lastY = ypos;
-//    
-//    cameraParam.ProcessMouseMovement(xoffset, yoffset);
-//}
-//
-//void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-//{
-//    cameraParam.ProcessMouseScroll(yoffset);
-//}
