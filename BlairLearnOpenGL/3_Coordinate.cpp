@@ -22,7 +22,14 @@ int coordinate()
 {
     GLFWwindow* window = CreateWindowContext();
     
-    Shader transformShader("Shader/transform_vs.vs", "Shader/transform_fs.fs");
+    BaseFunction& baseFunction = BaseFunction::getInstance();
+    
+    glfwSetCursorPosCallback(window, BaseFunction::mouse_callback);
+    glfwSetScrollCallback(window, BaseFunction::scroll_callback);
+    // tell GLFW to capture our mouse
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    
+    Shader transformShader("Shader/3_transform_vs.vs", "Shader/3_transform_fs.fs");
     
     float vertices[] = {
         // positions          // texture coords
@@ -38,8 +45,12 @@ int coordinate()
     
 #pragma mark 设置缓冲区
     unsigned int VBO, VAO, EBO;
-    // 注意这里不是GenBuffer！而是GenVertexArrays！！
+    
+    // 注意⚠️ 这里不是GenBuffer！而是GenVertexArrays！！
     glGenVertexArrays(1, &VAO);
+    // 注意⚠️ 这里必须先绑定VAO！
+    // 这一步确保了所有后续的 VBO 和 EBO 绑定以及顶点属性指针设置都记录在这个 VAO 中。
+    glBindVertexArray(VAO);
     
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -48,12 +59,12 @@ int coordinate()
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    
-    glBindVertexArray(VAO);
+
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    
     
     
     unsigned int texture1, texture2;
@@ -100,7 +111,11 @@ int coordinate()
     
 #pragma mark 渲染loop
     while (!glfwWindowShouldClose(window)) {
-        processInput(window);
+        float currentFrame = static_cast<float>(glfwGetTime());
+        baseFunction.cameraEntity.deltaTime = currentFrame - baseFunction.cameraEntity.lastFrame;
+        baseFunction.cameraEntity.lastFrame = currentFrame;
+        baseFunction.cameraEntity.ProcessInput(window, baseFunction.cameraEntity.deltaTime);
+        
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
@@ -114,9 +129,9 @@ int coordinate()
         glm::mat4 projection = glm::mat4(1.0f);
         
         model = glm::rotate(model, glm::radians(-55.f), glm::vec3(1.0f, 0.0f, 0.0f));
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-        projection = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f); // 第二个参数是宽高比
-        
+        view =  baseFunction.cameraEntity.GetViewMatrix();
+        projection = glm::perspective(glm::radians(baseFunction.cameraEntity.fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); // 第二个参数是宽高比
+
         /*
          * 第一个参数是Uniform Location
          * 第二个参数是Count，指定要修改的矩阵数量。如果目标统一变量不是矩阵数组，则该值应为 1；如果它是矩阵数组，则该值应为 1 或更多。
@@ -133,11 +148,13 @@ int coordinate()
         glUniformMatrix4fv(glGetUniformLocation(transformShader.shaderProgramID, "view"), 1, 0, &view[0][0]);
         glUniformMatrix4fv(glGetUniformLocation(transformShader.shaderProgramID, "projection"), 1, 0, &projection[0][0]);
         
+        glBindVertexArray(VAO);
         /*
+         * 第二个参数应该是绘制的顶点数，而不是索引数组的字节大小。
          * 第三个参数指定索引值的类型。
          * 第四个参数指定相对于第一个索引的偏移量。
          */
-        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         
         // 交换颜色缓冲（我们应用双缓冲渲染窗口应用程序）。
         glfwSwapBuffers(window);

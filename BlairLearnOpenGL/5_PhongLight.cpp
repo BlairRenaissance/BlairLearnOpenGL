@@ -31,8 +31,8 @@ int phongLight(){
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
-    Shader cubeShader("Shader/phongCube_vs.vs", "Shader/phongCube_fs.fs");
-    Shader lightShader("Shader/phongLight_vs.vs", "Shader/phongLight_fs.fs");
+    Shader cubeShader("Shader/5_phongCube_vs.vs", "Shader/5_phongCube_fs.fs");
+    Shader lightShader("Shader/5_phongLight_vs.vs", "Shader/5_phongLight_fs.fs");
     
     glEnable(GL_DEPTH_TEST);
     

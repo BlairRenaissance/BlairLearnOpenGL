@@ -28,7 +28,7 @@ int camera()
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
-    Shader cameraShader("Shader/camera_vs.vs", "Shader/camera_fs.fs");
+    Shader cameraShader("Shader/4_camera_vs.vs", "Shader/4_camera_fs.fs");
     
     glEnable(GL_DEPTH_TEST);
     

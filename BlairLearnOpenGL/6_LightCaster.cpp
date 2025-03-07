@@ -31,8 +31,8 @@ int lightCaster(){
     glfwSetScrollCallback(window, BaseFunction::scroll_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
-    Shader cubeShader("Shader/lightCasterCube_vs.vs", "Shader/lightCasterCube_fs.fs");
-    Shader lightShader("Shader/lightCaster_vs.vs", "Shader/lightCaster_fs.fs");
+    Shader cubeShader("Shader/6_lightCasterCube_vs.vs", "Shader/6_lightCasterCube_fs.fs");
+    Shader lightShader("Shader/6_lightCaster_vs.vs", "Shader/6_lightCaster_fs.fs");
     
     glEnable(GL_DEPTH_TEST);
     

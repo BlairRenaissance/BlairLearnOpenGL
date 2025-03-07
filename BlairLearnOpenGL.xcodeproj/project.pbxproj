@@ -24,6 +24,7 @@
 		D8C782B32D578577005D4641 /* 4_Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8C782B12D578577005D4641 /* 4_Camera.cpp */; };
 		D8C782B92D5A0529005D4641 /* 5_PhongLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8C782B72D5A0529005D4641 /* 5_PhongLight.cpp */; };
 		D8C782C22D5A2112005D4641 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8C782C02D5A2112005D4641 /* Camera.cpp */; };
+		D8FE5F462D79836900A58283 /* 6_LightCaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D8FE5F442D79836900A58283 /* 6_LightCaster.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,8 +58,8 @@
 		D842BA3A2BFDD2FE00436058 /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		D842BA3B2BFDD2FE00436058 /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
 		D842BA402BFDDECD00436058 /* libglm.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglm.dylib; path = ../../../../../opt/homebrew/Cellar/glm/1.0.1/lib/libglm.dylib; sourceTree = "<group>"; };
-		D842BA422BFDE0CF00436058 /* texture_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture_vs.vs; sourceTree = "<group>"; };
-		D842BA432BFDE0DD00436058 /* texture_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = texture_fs.fs; sourceTree = "<group>"; };
+		D842BA422BFDE0CF00436058 /* 2_texture_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 2_texture_vs.vs; sourceTree = "<group>"; };
+		D842BA432BFDE0DD00436058 /* 2_texture_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 2_texture_fs.fs; sourceTree = "<group>"; };
 		D842BA442C04742000436058 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		D842BA452C04745600436058 /* stb_image.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stb_image.cpp; sourceTree = "<group>"; };
 		D842BA482C04755C00436058 /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
@@ -68,20 +69,26 @@
 		D842BA4C2C04AC7B00436058 /* 3_Coordinate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = 3_Coordinate.hpp; sourceTree = "<group>"; };
 		D842BA4E2C05B04800436058 /* BaseFunction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BaseFunction.cpp; sourceTree = "<group>"; };
 		D842BA4F2C05B04800436058 /* BaseFunction.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseFunction.hpp; sourceTree = "<group>"; };
-		D842BA912C187CFC00436058 /* transform_vs.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = transform_vs.vs; sourceTree = "<group>"; };
-		D842BA922C187D1300436058 /* transform_fs.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = transform_fs.fs; sourceTree = "<group>"; };
+		D842BA912C187CFC00436058 /* 3_transform_vs.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = 3_transform_vs.vs; sourceTree = "<group>"; };
+		D842BA922C187D1300436058 /* 3_transform_fs.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = 3_transform_fs.fs; sourceTree = "<group>"; };
 		D8C782B12D578577005D4641 /* 4_Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = 4_Camera.cpp; sourceTree = "<group>"; };
 		D8C782B22D578577005D4641 /* 4_Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = 4_Camera.hpp; sourceTree = "<group>"; };
-		D8C782B42D578685005D4641 /* camera_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = camera_fs.fs; sourceTree = "<group>"; };
-		D8C782B52D578685005D4641 /* camera_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = camera_vs.vs; sourceTree = "<group>"; };
+		D8C782B42D578685005D4641 /* 4_camera_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 4_camera_fs.fs; sourceTree = "<group>"; };
+		D8C782B52D578685005D4641 /* 4_camera_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 4_camera_vs.vs; sourceTree = "<group>"; };
 		D8C782B72D5A0529005D4641 /* 5_PhongLight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = 5_PhongLight.cpp; sourceTree = "<group>"; };
 		D8C782B82D5A0529005D4641 /* 5_PhongLight.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = 5_PhongLight.hpp; sourceTree = "<group>"; };
-		D8C782BC2D5A18A4005D4641 /* phongLight_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = phongLight_fs.fs; sourceTree = "<group>"; };
-		D8C782BD2D5A18A4005D4641 /* phongLight_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = phongLight_vs.vs; sourceTree = "<group>"; };
-		D8C782BE2D5A1ADD005D4641 /* phongCube_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = phongCube_vs.vs; sourceTree = "<group>"; };
-		D8C782BF2D5A1ADD005D4641 /* phongCube_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = phongCube_fs.fs; sourceTree = "<group>"; };
+		D8C782BC2D5A18A4005D4641 /* 5_phongLight_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 5_phongLight_fs.fs; sourceTree = "<group>"; };
+		D8C782BD2D5A18A4005D4641 /* 5_phongLight_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 5_phongLight_vs.vs; sourceTree = "<group>"; };
+		D8C782BE2D5A1ADD005D4641 /* 5_phongCube_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 5_phongCube_vs.vs; sourceTree = "<group>"; };
+		D8C782BF2D5A1ADD005D4641 /* 5_phongCube_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 5_phongCube_fs.fs; sourceTree = "<group>"; };
 		D8C782C02D5A2112005D4641 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		D8C782C12D5A2112005D4641 /* Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
+		D8FE5F442D79836900A58283 /* 6_LightCaster.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = 6_LightCaster.cpp; sourceTree = "<group>"; };
+		D8FE5F452D79836900A58283 /* 6_LightCaster.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = 6_LightCaster.hpp; sourceTree = "<group>"; };
+		D8FE5F472D798B6800A58283 /* 6_lightCaster_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 6_lightCaster_fs.fs; sourceTree = "<group>"; };
+		D8FE5F482D798B6800A58283 /* 6_lightCaster_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 6_lightCaster_vs.vs; sourceTree = "<group>"; };
+		D8FE5F492D7991C000A58283 /* 6_lightCasterCube_fs.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 6_lightCasterCube_fs.fs; sourceTree = "<group>"; };
+		D8FE5F4A2D7991C000A58283 /* 6_lightCasterCube_vs.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 6_lightCasterCube_vs.vs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +142,8 @@
 				D8C782B22D578577005D4641 /* 4_Camera.hpp */,
 				D8C782B72D5A0529005D4641 /* 5_PhongLight.cpp */,
 				D8C782B82D5A0529005D4641 /* 5_PhongLight.hpp */,
+				D8FE5F442D79836900A58283 /* 6_LightCaster.cpp */,
+				D8FE5F452D79836900A58283 /* 6_LightCaster.hpp */,
 			);
 			path = BlairLearnOpenGL;
 			sourceTree = "<group>";
@@ -155,16 +164,20 @@
 		D842BA3D2BFDD8C500436058 /* Shader */ = {
 			isa = PBXGroup;
 			children = (
-				D8C782B42D578685005D4641 /* camera_fs.fs */,
-				D8C782B52D578685005D4641 /* camera_vs.vs */,
-				D842BA422BFDE0CF00436058 /* texture_vs.vs */,
-				D842BA432BFDE0DD00436058 /* texture_fs.fs */,
-				D842BA912C187CFC00436058 /* transform_vs.vs */,
-				D842BA922C187D1300436058 /* transform_fs.fs */,
-				D8C782BC2D5A18A4005D4641 /* phongLight_fs.fs */,
-				D8C782BD2D5A18A4005D4641 /* phongLight_vs.vs */,
-				D8C782BF2D5A1ADD005D4641 /* phongCube_fs.fs */,
-				D8C782BE2D5A1ADD005D4641 /* phongCube_vs.vs */,
+				D842BA422BFDE0CF00436058 /* 2_texture_vs.vs */,
+				D842BA432BFDE0DD00436058 /* 2_texture_fs.fs */,
+				D842BA912C187CFC00436058 /* 3_transform_vs.vs */,
+				D842BA922C187D1300436058 /* 3_transform_fs.fs */,
+				D8C782B42D578685005D4641 /* 4_camera_fs.fs */,
+				D8C782B52D578685005D4641 /* 4_camera_vs.vs */,
+				D8C782BC2D5A18A4005D4641 /* 5_phongLight_fs.fs */,
+				D8C782BD2D5A18A4005D4641 /* 5_phongLight_vs.vs */,
+				D8C782BF2D5A1ADD005D4641 /* 5_phongCube_fs.fs */,
+				D8C782BE2D5A1ADD005D4641 /* 5_phongCube_vs.vs */,
+				D8FE5F472D798B6800A58283 /* 6_lightCaster_fs.fs */,
+				D8FE5F482D798B6800A58283 /* 6_lightCaster_vs.vs */,
+				D8FE5F492D7991C000A58283 /* 6_lightCasterCube_fs.fs */,
+				D8FE5F4A2D7991C000A58283 /* 6_lightCasterCube_vs.vs */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -260,6 +273,7 @@
 				D8C782B32D578577005D4641 /* 4_Camera.cpp in Sources */,
 				D842BA502C05B04800436058 /* BaseFunction.cpp in Sources */,
 				D8C782C22D5A2112005D4641 /* Camera.cpp in Sources */,
+				D8FE5F462D79836900A58283 /* 6_LightCaster.cpp in Sources */,
 				D842BA4D2C04AC7B00436058 /* 3_Coordinate.cpp in Sources */,
 				D842BA392BFDCFFB00436058 /* 2_Texture.cpp in Sources */,
 				D842BA462C04745600436058 /* stb_image.cpp in Sources */,
