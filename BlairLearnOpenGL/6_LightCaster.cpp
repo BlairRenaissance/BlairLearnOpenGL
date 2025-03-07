@@ -187,6 +187,11 @@ int lightCaster(){
         glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
         glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "viewPos"), baseFunction.cameraEntity.worldPosition.x, baseFunction.cameraEntity.worldPosition.y, baseFunction.cameraEntity.worldPosition.z);
         
+        glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "spotLight.spotLightPos"), baseFunction.cameraEntity.worldPosition.x, baseFunction.cameraEntity.worldPosition.y, baseFunction.cameraEntity.worldPosition.z);
+        glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "spotLight.spotLightDir"), baseFunction.cameraEntity.frontDir.x, baseFunction.cameraEntity.frontDir.y, baseFunction.cameraEntity.frontDir.z);
+        glUniform1f(glGetUniformLocation(cubeShader.shaderProgramID, "spotLight.cutOff"), glm::cos(glm::radians(12.5f)));
+        glUniform1f(glGetUniformLocation(cubeShader.shaderProgramID, "spotLight.outerCutOff"), glm::cos(glm::radians(14.0f)));
+        
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, diffuseTexture);
         glActiveTexture(GL_TEXTURE1);
