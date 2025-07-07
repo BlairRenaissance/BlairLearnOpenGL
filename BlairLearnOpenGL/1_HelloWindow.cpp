@@ -7,7 +7,6 @@
 
 // 请确认是在包含GLFW的头文件之前包含了GLAD的头文件。
 // GLAD的头文件包含了正确的OpenGL头文件（例如GL/gl.h），所以需要在其它依赖于OpenGL的头文件之前包含GLAD。
-#include "1_HelloWindow.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -195,3 +194,11 @@ int hello_window() {
 }
 
 
+int main() {
+    hello_window();
+    int uniform_count = 0;
+    glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &uniform_count);
+    std::cout << uniform_count << std::endl;
+
+    return 0;
+}

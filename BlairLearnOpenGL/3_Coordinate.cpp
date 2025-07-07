@@ -5,7 +5,6 @@
 //  Created by yiwen ren on 2024/5/27.
 //
 
-#include "3_Coordinate.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -29,7 +28,7 @@ int coordinate()
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
-    Shader transformShader("Shader/3_transform_vs.vs", "Shader/3_transform_fs.fs");
+    Shader transformShader("Shader/3_transform_vs.vert", "Shader/3_transform_fs.frag");
     
     float vertices[] = {
         // positions          // texture coords
@@ -77,11 +76,21 @@ int coordinate()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    unsigned char* data = stbi_load("../Resource/container.jpg", &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load("Resource/container.jpg", &width, &height, &nrChannels, 0);
     if(data){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        // 获取当前工作目录
+        std::string currentPath = std::filesystem::current_path().string();
+        std::string texturePath = currentPath + "/Resource/container.jpg";
+
+        std::cout << "Trying to load texture from: " << texturePath << std::endl;
     }else{
         std::cout << "Failed to load texture1" << std::endl;
+        // 获取当前工作目录
+        std::string currentPath = std::filesystem::current_path().string();
+        std::string texturePath = currentPath + "/Resource/container.jpg";
+
+        std::cout << "Trying to load texture from: " << texturePath << std::endl;
     }
     stbi_image_free(data);
     
@@ -95,7 +104,7 @@ int coordinate()
     
     // 图片原点在左上角，但OpenGL的原点在左下角
     stbi_set_flip_vertically_on_load(true);
-    data = stbi_load("../Resource/awesomeface.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("Resource/awesomeface.png", &width, &height, &nrChannels, 0);
     if(data){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     }else{
@@ -168,5 +177,15 @@ int coordinate()
     glDeleteBuffers(1, &EBO);
     
     glfwTerminate();
+    return 0;
+}
+
+int main() {
+    coordinate();
+
+    int uniform_count = 0;
+    glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &uniform_count);
+    std::cout << uniform_count << std::endl;
+
     return 0;
 }

@@ -5,8 +5,6 @@
 //  Created by yiwen ren on 2025/2/8.
 //
 
-#include "4_Camera.hpp"
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -28,7 +26,7 @@ int camera()
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
-    Shader cameraShader("Shader/4_camera_vs.vs", "Shader/4_camera_fs.fs");
+    Shader cameraShader("Shader/4_camera_vs.vert", "Shader/4_camera_fs.frag");
     
     glEnable(GL_DEPTH_TEST);
     
@@ -114,7 +112,7 @@ int camera()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    unsigned char* data = stbi_load("../Resource/container.jpg", &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load("Resource/container.jpg", &width, &height, &nrChannels, 0);
     if(data){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
     }else{
@@ -132,7 +130,7 @@ int camera()
     
     // 图片原点在左上角，但OpenGL的原点在左下角
     stbi_set_flip_vertically_on_load(true);
-    data = stbi_load("../Resource/awesomeface.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("Resource/awesomeface.png", &width, &height, &nrChannels, 0);
     if(data){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     }else{
@@ -193,5 +191,15 @@ int camera()
     glDeleteBuffers(1, &VBO);
     
     glfwTerminate();
+    return 0;
+}
+
+int main() {
+    camera();
+
+    int uniform_count = 0;
+    glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &uniform_count);
+    std::cout << uniform_count << std::endl;
+
     return 0;
 }

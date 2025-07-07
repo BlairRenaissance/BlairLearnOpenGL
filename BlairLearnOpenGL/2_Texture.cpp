@@ -5,8 +5,6 @@
 //  Created by yiwen ren on 2024/5/22.
 //
 
-#include "2_Texture.hpp"
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -21,7 +19,7 @@ int texture()
     
 #pragma mark 配置
     
-    Shader textureShader("Shader/2_texture_vs.vs", "Shader/2_texture_fs.fs");
+    Shader textureShader("Shader/2_texture_vs.vert", "Shader/2_texture_fs.frag");
 
     float vertices[] = {
         // positions          // colors           // texture coords
@@ -68,7 +66,7 @@ int texture()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // 放大Magnify操作时。
     // 宽度、高度、颜色通道的个数。
     int width, height, nrChannels;
-    unsigned char *data = stbi_load("../Resource/container.jpg", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("Resource/container.jpg", &width, &height, &nrChannels, 0);
     if(data){
         /*
          * 第一个参数指定了纹理目标(Target)。
@@ -103,7 +101,7 @@ int texture()
     glBindTexture(GL_TEXTURE_2D, texture2);
     // 图片原点在左上角，但OpenGL的原点在左下角
     stbi_set_flip_vertically_on_load(true);
-    data = stbi_load("../Resource/awesomeface.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("Resource/awesomeface.png", &width, &height, &nrChannels, 0);
     if(data){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
@@ -149,5 +147,15 @@ int texture()
     glDeleteBuffers(1, &EBO);
     
     glfwTerminate();
+    return 0;
+}
+
+int main() {
+    texture();
+
+    int uniform_count = 0;
+    glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &uniform_count);
+    std::cout << uniform_count << std::endl;
+
     return 0;
 }

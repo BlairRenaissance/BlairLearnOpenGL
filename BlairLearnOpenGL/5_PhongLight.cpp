@@ -5,8 +5,6 @@
 //  Created by yiwen ren on 2025/2/10.
 //
 
-#include "5_PhongLight.hpp"
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -31,8 +29,8 @@ int phongLight(){
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
-    Shader cubeShader("Shader/5_phongCube_vs.vs", "Shader/5_phongCube_fs.fs");
-    Shader lightShader("Shader/5_phongLight_vs.vs", "Shader/5_phongLight_fs.fs");
+    Shader cubeShader("Shader/5_phongCube_vs.vert", "Shader/5_phongCube_fs.frag");
+    Shader lightShader("Shader/5_phongLight_vs.vert", "Shader/5_phongLight_fs.frag");
     
     glEnable(GL_DEPTH_TEST);
     
@@ -133,7 +131,7 @@ int phongLight(){
     
     // 图片原点在左上角，但OpenGL的原点在左下角
     stbi_set_flip_vertically_on_load(true);
-    data = stbi_load("../Resource/container2_specular.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("Resource/container2_specular.png", &width, &height, &nrChannels, 0);
     if(data){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     }else{
@@ -154,7 +152,7 @@ int phongLight(){
     
     // 图片原点在左上角，但OpenGL的原点在左下角
     stbi_set_flip_vertically_on_load(true);
-    data = stbi_load("../Resource/matrix.jpg", &width, &height, &nrChannels, 0);
+    data = stbi_load("Resource/matrix.jpg", &width, &height, &nrChannels, 0);
     if(data){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
     }else{
@@ -236,5 +234,15 @@ int phongLight(){
     glDeleteBuffers(1, &VBO);
     
     glfwTerminate();
+    return 0;
+}
+
+int main() {
+    phongLight();
+
+    int uniform_count = 0;
+    glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &uniform_count);
+    std::cout << uniform_count << std::endl;
+
     return 0;
 }

@@ -409,6 +409,7 @@
 					/Users/yiwenren/Project/Practice/BlairLearnOpenGL/Resource/glad/include,
 					/opt/homebrew/Cellar/glfw/3.4/include,
 					/opt/homebrew/Cellar/glm/1.0.1/include/glm/,
+					/Users/yiwenren/Project/Mymy/BlairLearnOpenGL/Resource/glad/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/opt/homebrew/Cellar/glfw/3.4/lib,
@@ -426,6 +427,7 @@
 					/Users/yiwenren/Project/Practice/BlairLearnOpenGL/Resource/glad/include,
 					/opt/homebrew/Cellar/glfw/3.4/include,
 					/opt/homebrew/Cellar/glm/1.0.1/include/glm/,
+					/Users/yiwenren/Project/Mymy/BlairLearnOpenGL/Resource/glad/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/opt/homebrew/Cellar/glfw/3.4/lib,

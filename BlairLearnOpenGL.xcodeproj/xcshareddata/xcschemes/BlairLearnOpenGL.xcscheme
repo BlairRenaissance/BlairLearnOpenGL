@@ -36,7 +36,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/yiwenren/Project/Practice/BlairLearnOpenGL/BlairLearnOpenGL"
+      customWorkingDirectory = "/Users/yiwenren/Project/Mymy/BlairLearnOpenGL/BlairLearnOpenGL"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"

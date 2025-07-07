@@ -5,8 +5,6 @@
 //  Created by yiwen ren on 2025/3/6.
 //
 
-#include "6_LightCaster.hpp"
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -31,8 +29,8 @@ int lightCaster(){
     glfwSetScrollCallback(window, BaseFunction::scroll_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
-    Shader cubeShader("Shader/6_lightCasterCube_vs.vs", "Shader/6_lightCasterCube_fs.fs");
-    Shader lightShader("Shader/6_lightCaster_vs.vs", "Shader/6_lightCaster_fs.fs");
+    Shader cubeShader("Shader/6_lightCasterCube_vs.vert", "Shader/6_lightCasterCube_fs.frag");
+    Shader lightShader("Shader/6_lightCaster_vs.vert", "Shader/6_lightCaster_fs.frag");
     
     glEnable(GL_DEPTH_TEST);
     
@@ -126,7 +124,7 @@ int lightCaster(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    unsigned char* data = stbi_load("../Resource/container2.png", &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load("Resource/container2.png", &width, &height, &nrChannels, 0);
     if(data){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     }else{
@@ -146,7 +144,7 @@ int lightCaster(){
     
     // 图片原点在左上角，但OpenGL的原点在左下角
     stbi_set_flip_vertically_on_load(true);
-    data = stbi_load("../Resource/container2_specular.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("Resource/container2_specular.png", &width, &height, &nrChannels, 0);
     if(data){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     }else{
@@ -241,5 +239,15 @@ int lightCaster(){
     glDeleteBuffers(1, &VBO);
     
     glfwTerminate();
+    return 0;
+}
+
+int main() {
+    lightCaster();
+
+    int uniform_count = 0;
+    glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &uniform_count);
+    std::cout << uniform_count << std::endl;
+
     return 0;
 }
