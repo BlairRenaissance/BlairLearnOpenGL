@@ -18,10 +18,15 @@ include_directories(
         ${PROJECT_SOURCE_DIR}/BlairLearnOpenGL
 )
 
+#include_directories(${PROJECT_SOURCE_DIR}/third_party/assimp/include)
+
 # 仅收集 BlairLearnOpenGL 根目录下的 .cpp 文件，不递归
 file(GLOB MAIN_SOURCES
         "${PROJECT_SOURCE_DIR}/BlairLearnOpenGL/*.cpp"  # 根目录下的 .cpp 文件
 )
+
+# 指定动态库路径
+#link_directories(${PROJECT_SOURCE_DIR}/third_party/assimp/lib)
 
 
 # ====================== 将Core编译成静态库 ======================
@@ -94,6 +99,7 @@ foreach(main_file ${MAIN_SOURCES})
             glm::glm
             glad
             CoreLib
+#            assimp
     )
 
 endforeach()
