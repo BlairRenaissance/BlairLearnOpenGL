@@ -1,6 +1,6 @@
 #version 330 core
 in vec2 TexCoord;
-in vec3 vViewDirVS;
+in vec3 vDirOS; // 物体空间单位视线方向
 
 out vec4 FragColor;
 
@@ -9,21 +9,23 @@ uniform float roomDepth;   // 房间深度参数 (0.001~0.999)
 
 void main()
 {
+    // 房间UV（平面局部坐标）
     vec2 roomUV = fract(TexCoord);
-    float farFrac = roomDepth;
 
     // 将 [0,1] 深度映射到 [0,+inf)
+    float farFrac = roomDepth;
     float depthScale = 1.0 / (1.0 - farFrac) - 1.0;
 
-    // 起点为规范化盒空间平面 z = -1
+    // 以房间为原点：规范化盒空间的起点在当前片元所在的平面 z = -1
     vec3 pos = vec3(roomUV * 2.0 - 1.0, -1.0);
 
-    // 视线方向（相机->表面），与Unity一致；z 方向反转并缩放
-    vec3 dir = vViewDirVS;
+    // 射线方向：物体空间单位方向，调整Z以匹配底面追踪
+    vec3 dir = vDirOS;
     dir.z *= -depthScale;
 
-    // 避免除零
-    vec3 id = 1.0 / (dir + vec3(1e-6));
+    // 避免除零导致的NaN/Inf
+    const vec3 eps = vec3(1e-6);
+    vec3 id = 1.0 / (dir + eps);
     vec3 k = abs(id) - pos * id;
     float kMin = min(min(k.x, k.y), k.z);
     pos += kMin * dir;
@@ -40,7 +42,7 @@ void main()
     vec2 interiorUV = pos.xy * mix(1.0, farFrac, interp);
     interiorUV = interiorUV * 0.5 + 0.5;
 
-    // 采样（当前没有图集，只采一次）
+    // 采样预投影2D室内图
     vec4 room = texture(texture1, interiorUV);
     FragColor = vec4(room.rgb, 1.0);
 }
