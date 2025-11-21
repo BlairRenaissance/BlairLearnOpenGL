@@ -16,18 +16,28 @@ out vec4 FragColor;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 uniform Material material;
+uniform bool enableLighting;
 
 void main() {
+    // 基础颜色（漫反射纹理）
+    vec3 baseColor = texture(material.diffuse, texCoord).rgb;
+
+    // 如果关闭光照，则仅显示纹理本身
+    if (!enableLighting) {
+        FragColor = vec4(baseColor, 1.0);
+        return;
+    }
+
     // ambient
     float ambientStrength = 0.1;
-    vec3 ambientLight = ambientStrength * texture(material.diffuse, texCoord).rgb;
+    vec3 ambientLight = ambientStrength * baseColor;
     
     // diffuse
     float diffuseStrength = 0.3;
     vec3 norm = normalize(normal);
     vec3 lightDir = normalize(lightPos - fragPos);
     float diffuse = max(dot(lightDir, norm), 0.0);
-    vec3 diffuseLight = diffuse * diffuseStrength * texture(material.diffuse, texCoord).rgb;
+    vec3 diffuseLight = diffuse * diffuseStrength * baseColor;
     
     // specular
     float specularStrength = 0.5;

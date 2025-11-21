@@ -15,9 +15,7 @@
 #include "stb_image.h"
 #include "BaseFunction.hpp"
 #include "Shader.hpp"
-
-// lighting
-glm::vec3 lightCasterPos(0.4f, 0.4f, 1.0f);
+#include "Light.hpp"
 
 int phongLight(){
     GLFWwindow* window = CreateWindowContextWithParam(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL");
@@ -31,6 +29,9 @@ int phongLight(){
     
     Shader cubeShader("Shader/5_phongCube_vs.vert", "Shader/5_phongCube_fs.frag");
     Shader lightShader("Shader/5_phongLight_vs.vert", "Shader/5_phongLight_fs.frag");
+
+    // 使用LightManager统一管理灯光
+    LightManager lightManager(glm::vec3(0.4f, 0.4f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
     
     glEnable(GL_DEPTH_TEST);
     
@@ -168,11 +169,18 @@ int phongLight(){
     
     
 #pragma mark 渲染loop
+    // 用于处理一次按键只触发一次开关
+    static bool lastLKeyState = false;
+    static bool lastKKeyState = false;
+
     while(!glfwWindowShouldClose(window)){
         float currentFrame = static_cast<float>(glfwGetTime());
         baseFunction.cameraEntity.deltaTime = currentFrame - baseFunction.cameraEntity.lastFrame;
         baseFunction.cameraEntity.lastFrame = currentFrame;
         baseFunction.cameraEntity.ProcessInput(window, baseFunction.cameraEntity.deltaTime);
+
+        // 处理灯光相关按键
+        lightManager.ProcessInput(window);
         
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -192,8 +200,8 @@ int phongLight(){
         glUniformMatrix4fv(glGetUniformLocation(cubeShader.shaderProgramID, "projection"), 1, 0, glm::value_ptr(projection));
 
         glUniform1f(glGetUniformLocation(cubeShader.shaderProgramID, "material.shininess"), 64.0f);
-        glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "lightPos"), lightCasterPos.x, lightCasterPos.y, lightCasterPos.z);
-        glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "viewPos"), baseFunction.cameraEntity.worldPosition.x, baseFunction.cameraEntity.worldPosition.y, baseFunction.cameraEntity.worldPosition.z);
+        // 使用LightManager设置光照相关uniform
+        lightManager.ApplyToObjectShader(cubeShader, baseFunction.cameraEntity.worldPosition);
         
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, diffuseTexture);
@@ -206,21 +214,23 @@ int phongLight(){
         glDrawArrays(GL_TRIANGLES, 0, 36);
         
         // 绘制灯光Box
-        lightShader.use();
-        
-        // 正常的变换顺序应该是先rotate再scale再translate
-        // 但这里的目的只是移动到一个位置再让盒子小一点，所以没必要了
-        model = glm::translate(model, lightCasterPos);
-        model = glm::scale(model, glm::vec3(0.1f)); // a smaller cube
-        
-        glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgramID, "model"), 1, 0, glm::value_ptr(model));
-        glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgramID, "view"), 1, 0, glm::value_ptr(view));
-        glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgramID, "projection"), 1, 0, glm::value_ptr(projection));
-        
-        glUniform3f(glGetUniformLocation(lightShader.shaderProgramID, "lightColor"), 1.0f, 1.0f, 1.0f);
-        
-        glBindVertexArray(lightVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        if (lightManager.showLightBox) {
+            lightShader.use();
+            
+            glm::mat4 lightModel = glm::mat4(1.0f);
+            lightModel = glm::translate(lightModel, lightManager.position);
+            lightModel = glm::scale(lightModel, glm::vec3(0.1f)); // a smaller cube
+            
+            glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgramID, "model"), 1, 0, glm::value_ptr(lightModel));
+            glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgramID, "view"), 1, 0, glm::value_ptr(view));
+            glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgramID, "projection"), 1, 0, glm::value_ptr(projection));
+            
+            // 使用LightManager设置灯光颜色
+            lightManager.ApplyToLightBoxShader(lightShader);
+            
+            glBindVertexArray(lightVAO);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
         
         // 交换颜色缓冲（我们应用双缓冲渲染窗口应用程序）。
         glfwSwapBuffers(window);
