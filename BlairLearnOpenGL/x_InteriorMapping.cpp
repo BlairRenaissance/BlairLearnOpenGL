@@ -82,7 +82,7 @@ int camera()
     // 通过glUniform1i设置每个着色器采样器属于哪个纹理单元(GL_TEXTURE0/1/../15)
     glUniform1i(glGetUniformLocation(cameraShader.shaderProgramID, "texture1"), 0);
 
-    glUniform1f(glGetUniformLocation(cameraShader.shaderProgramID, "roomDepth"), 0.7f);
+    glUniform1f(glGetUniformLocation(cameraShader.shaderProgramID, "roomDepth"), 0.4f);
 
 #pragma mark 渲染loop
     while(!glfwWindowShouldClose(window)) {

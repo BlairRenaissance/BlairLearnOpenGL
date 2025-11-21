@@ -8,12 +8,8 @@
 #ifndef Shader_hpp
 #define Shader_hpp
 
-#include <glad/glad.h>
 #include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <stdio.h>
+
 class Shader{
 
 public:

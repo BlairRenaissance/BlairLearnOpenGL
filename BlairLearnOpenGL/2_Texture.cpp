@@ -14,11 +14,10 @@
 
 int texture()
 {
+#pragma mark 初始化窗口
     GLFWwindow* window = CreateWindowContext();
 
-    
 #pragma mark 配置
-    
     Shader textureShader("Shader/2_texture_vs.vert", "Shader/2_texture_fs.frag");
 
     float vertices[] = {

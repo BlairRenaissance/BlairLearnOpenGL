@@ -12,38 +12,6 @@ else ()
     find_library(OPENGL_LIBRARY GL)
 endif ()
 
-
-# 添加头文件搜索路径，让编译器能找到工程内的头文件
-include_directories(
-        ${PROJECT_SOURCE_DIR}/BlairLearnOpenGL
-)
-
-#include_directories(${PROJECT_SOURCE_DIR}/third_party/assimp/include)
-
-# 仅收集 BlairLearnOpenGL 根目录下的 .cpp 文件，不递归
-file(GLOB MAIN_SOURCES
-        "${PROJECT_SOURCE_DIR}/BlairLearnOpenGL/*.cpp"  # 根目录下的 .cpp 文件
-)
-
-# 指定动态库路径
-#link_directories(${PROJECT_SOURCE_DIR}/third_party/assimp/lib)
-
-
-# ====================== 将Core编译成静态库 ======================
-file(GLOB CORE_SOURCES "${PROJECT_SOURCE_DIR}/BlairLearnOpenGL/Core/*.cpp")
-# 将 Core 目录的源文件编译成静态库 CoreLib（也可以用 SHARED 改成共享库/动态库）
-add_library(CoreLib STATIC ${CORE_SOURCES})
-target_link_libraries(CoreLib
-        PRIVATE glfw
-        PRIVATE glm::glm
-        PRIVATE glad
-)
-# 为 Core 库设置头文件包含路径，这样其他代码包含 Core 头文件时能找到
-target_include_directories(CoreLib PUBLIC
-        "${PROJECT_SOURCE_DIR}/BlairLearnOpenGL/Core"
-)
-
-
 # ====================== 将glad编译成静态库 ======================
 add_library(glad STATIC BlairLearnOpenGL/Core/glad/src/glad.c)
 target_include_directories(glad PUBLIC BlairLearnOpenGL/Core/glad/include)
@@ -69,6 +37,30 @@ endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+
+# ====================== 添加第三方库 ======================
+
+# 从第三方源码构建并引入 assimp
+add_subdirectory(${PROJECT_SOURCE_DIR}/third-party/assimp)
+
+# ====================== 将Core编译成静态库 ======================
+file(GLOB CORE_SOURCES CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/BlairLearnOpenGL/Core/*.cpp")
+# 将 Core 目录的源文件编译成静态库 CoreLib（也可以用 SHARED 改成共享库/动态库）
+add_library(CoreLib STATIC ${CORE_SOURCES})
+target_link_libraries(CoreLib
+        PRIVATE glfw
+        PRIVATE glm::glm
+        PRIVATE glad
+        PUBLIC assimp
+)
+
+# 添加头文件搜索路径，让编译器能找到工程内的头文件
+# 为 Core 库设置头文件包含路径，这样其他代码包含 Core 头文件时能找到
+target_include_directories(CoreLib PUBLIC
+        "${PROJECT_SOURCE_DIR}/BlairLearnOpenGL"     # 根头文件
+        "${PROJECT_SOURCE_DIR}/BlairLearnOpenGL/Core" # Core 头文件
+)
+
 # ====================== 复制资源 ======================
 
 add_custom_target(CopyResources ALL
@@ -81,6 +73,12 @@ add_custom_target(CopyResources ALL
 )
 
 # ====================== 生成可执行文件 ======================
+
+# 仅收集 BlairLearnOpenGL 根目录下的 .cpp 文件，不递归
+file(GLOB MAIN_SOURCES CONFIGURE_DEPENDS
+        "${PROJECT_SOURCE_DIR}/BlairLearnOpenGL/*.cpp"  # 根目录下的 .cpp 文件
+)
+
 # 为每个包含 main 函数的文件创建独立的可执行文件
 foreach(main_file ${MAIN_SOURCES})
     # 获取不带路径和扩展名的文件名作为可执行文件名称
@@ -99,7 +97,6 @@ foreach(main_file ${MAIN_SOURCES})
             glm::glm
             glad
             CoreLib
-#            assimp
     )
 
 endforeach()
