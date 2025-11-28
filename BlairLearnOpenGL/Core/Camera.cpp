@@ -78,6 +78,10 @@ void Camera::ProcessInput(GLFWwindow *window, float deltaTime)
         this->ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         this->ProcessKeyboard(RIGHT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        this->ProcessKeyboard(UP, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        this->ProcessKeyboard(DOWN, deltaTime);
 }
 
 // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
@@ -92,4 +96,8 @@ void Camera::ProcessKeyboard(CameraMovement direction, float deltaTime)
         worldPosition -= rightDir * velocity;
     if (direction == RIGHT)
         worldPosition += rightDir * velocity;
+    if (direction == UP)
+        worldPosition += upDir * velocity;
+    if (direction == DOWN)
+        worldPosition -= upDir * velocity;
 }

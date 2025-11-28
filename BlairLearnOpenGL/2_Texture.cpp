@@ -5,6 +5,7 @@
 //  Created by yiwen ren on 2024/5/22.
 //
 
+#include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
