@@ -13,16 +13,17 @@
 #include <iostream>
 
 #include "stb_image.h"
-#include "BaseFunction.hpp"
+#include "OpenGLContext.hpp"
 #include "Shader.hpp"
 
 int camera()
 {
     GLFWwindow* window = CreateWindowContext();
-    BaseFunction& baseFunction = BaseFunction::getInstance();
+    OpenGLContext& openGLContext = OpenGLContext::getInstance();
+    openGLContext.cameraEntity.BindToWindow(window);
 
-    glfwSetCursorPosCallback(window, BaseFunction::mouse_callback);
-    glfwSetScrollCallback(window, BaseFunction::scroll_callback);
+    glfwSetCursorPosCallback(window, Camera::mouse_callback);
+    glfwSetScrollCallback(window, Camera::scroll_callback);
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -87,9 +88,9 @@ int camera()
 #pragma mark 渲染loop
     while(!glfwWindowShouldClose(window)) {
         float currentFrame = static_cast<float>(glfwGetTime());
-        baseFunction.cameraEntity.deltaTime = currentFrame - baseFunction.cameraEntity.lastFrame;
-        baseFunction.cameraEntity.lastFrame = currentFrame;
-        baseFunction.cameraEntity.ProcessInput(window, baseFunction.cameraEntity.deltaTime);
+        openGLContext.cameraEntity.deltaTime = currentFrame - openGLContext.cameraEntity.lastFrame;
+        openGLContext.cameraEntity.lastFrame = currentFrame;
+        openGLContext.cameraEntity.ProcessInput(window, openGLContext.cameraEntity.deltaTime);
 
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -100,8 +101,8 @@ int camera()
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
 
-        view = baseFunction.cameraEntity.GetViewMatrix();
-        projection = glm::perspective(glm::radians(baseFunction.cameraEntity.fov), 800.0f/600.0f, 0.1f, 100.0f); // 第二个参数是宽高比
+        view = openGLContext.cameraEntity.GetViewMatrix();
+        projection = glm::perspective(glm::radians(openGLContext.cameraEntity.fov), 800.0f/600.0f, 0.1f, 100.0f); // 第二个参数是宽高比
 
         // 接口解析见Topic3
         glUniformMatrix4fv(glGetUniformLocation(cameraShader.shaderProgramID, "view"), 1, 0, glm::value_ptr(view));

@@ -13,7 +13,7 @@
 #include <iostream>
 
 #include "stb_image.h"
-#include "BaseFunction.hpp"
+#include "OpenGLContext.hpp"
 #include "Shader.hpp"
 
 
@@ -22,11 +22,12 @@ glm::vec3 lightPos(0.4f, 0.4f, 1.0f);
 
 int lightCaster(){
     GLFWwindow* window = CreateWindowContextWithParam(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL");
-    BaseFunction& baseFunction = BaseFunction::getInstance();
+    OpenGLContext& openGLContext = OpenGLContext::getInstance();
+    openGLContext.cameraEntity.BindToWindow(window);
     
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(window, BaseFunction::mouse_callback);
-    glfwSetScrollCallback(window, BaseFunction::scroll_callback);
+    glfwSetCursorPosCallback(window, Camera::mouse_callback);
+    glfwSetScrollCallback(window, Camera::scroll_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
     Shader cubeShader("Shader/6_lightCasterCube_vs.vert", "Shader/6_lightCasterCube_fs.frag");
@@ -161,9 +162,9 @@ int lightCaster(){
 #pragma mark 渲染loop
     while(!glfwWindowShouldClose(window)){
         float currentFrame = static_cast<float>(glfwGetTime());
-        baseFunction.cameraEntity.deltaTime = currentFrame - baseFunction.cameraEntity.lastFrame;
-        baseFunction.cameraEntity.lastFrame = currentFrame;
-        baseFunction.cameraEntity.ProcessInput(window, baseFunction.cameraEntity.deltaTime);
+        openGLContext.cameraEntity.deltaTime = currentFrame - openGLContext.cameraEntity.lastFrame;
+        openGLContext.cameraEntity.lastFrame = currentFrame;
+        openGLContext.cameraEntity.ProcessInput(window, openGLContext.cameraEntity.deltaTime);
         
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -172,8 +173,8 @@ int lightCaster(){
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
         
-        view = baseFunction.cameraEntity.GetViewMatrix();
-        projection = glm::perspective(glm::radians(baseFunction.cameraEntity.fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); // 第二个参数是宽高比
+        view = openGLContext.cameraEntity.GetViewMatrix();
+        projection = glm::perspective(glm::radians(openGLContext.cameraEntity.fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); // 第二个参数是宽高比
         
         // 绘制Cube
         cubeShader.use();
@@ -183,10 +184,10 @@ int lightCaster(){
         
         glUniform1f(glGetUniformLocation(cubeShader.shaderProgramID, "material.shininess"), 64.0f);
         glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
-        glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "viewPos"), baseFunction.cameraEntity.worldPosition.x, baseFunction.cameraEntity.worldPosition.y, baseFunction.cameraEntity.worldPosition.z);
+        glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "viewPos"), openGLContext.cameraEntity.worldPosition.x, openGLContext.cameraEntity.worldPosition.y, openGLContext.cameraEntity.worldPosition.z);
         
-        glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "spotLight.spotLightPos"), baseFunction.cameraEntity.worldPosition.x, baseFunction.cameraEntity.worldPosition.y, baseFunction.cameraEntity.worldPosition.z);
-        glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "spotLight.spotLightDir"), baseFunction.cameraEntity.frontDir.x, baseFunction.cameraEntity.frontDir.y, baseFunction.cameraEntity.frontDir.z);
+        glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "spotLight.spotLightPos"), openGLContext.cameraEntity.worldPosition.x, openGLContext.cameraEntity.worldPosition.y, openGLContext.cameraEntity.worldPosition.z);
+        glUniform3f(glGetUniformLocation(cubeShader.shaderProgramID, "spotLight.spotLightDir"), openGLContext.cameraEntity.frontDir.x, openGLContext.cameraEntity.frontDir.y, openGLContext.cameraEntity.frontDir.z);
         glUniform1f(glGetUniformLocation(cubeShader.shaderProgramID, "spotLight.cutOff"), glm::cos(glm::radians(12.5f)));
         glUniform1f(glGetUniformLocation(cubeShader.shaderProgramID, "spotLight.outerCutOff"), glm::cos(glm::radians(14.0f)));
         

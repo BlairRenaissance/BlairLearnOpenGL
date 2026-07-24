@@ -18,6 +18,40 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yawAngle, float pitchAngl
     UpdateCameraVectors();
 }
 
+void Camera::BindToWindow(GLFWwindow* window)
+{
+    if (window == nullptr) {
+        return;
+    }
+    glfwSetWindowUserPointer(window, this);
+}
+
+Camera* Camera::GetCameraFromWindow(GLFWwindow* window)
+{
+    if (window == nullptr) {
+        return nullptr;
+    }
+    return static_cast<Camera*>(glfwGetWindowUserPointer(window));
+}
+
+void Camera::mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
+{
+    Camera* camera = GetCameraFromWindow(window);
+    if (camera == nullptr) {
+        return;
+    }
+    camera->HandleMouseCallback(window, xposIn, yposIn);
+}
+
+void Camera::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    Camera* camera = GetCameraFromWindow(window);
+    if (camera == nullptr) {
+        return;
+    }
+    camera->HandleScrollCallback(window, xoffset, yoffset);
+}
+
 glm::mat4 Camera::GetViewMatrix(){
     return glm::lookAt(worldPosition, worldPosition + frontDir, upDir);
 }
@@ -42,6 +76,31 @@ void Camera::ProcessMouseScroll(float yoffset)
         fov = 1.0f;
     if (fov > 45.0f)
         fov = 45.0f;
+}
+
+void Camera::HandleMouseCallback(GLFWwindow* window, double xposIn, double yposIn)
+{
+    float xpos = static_cast<float>(xposIn);
+    float ypos = static_cast<float>(yposIn);
+    
+    if (firstMouse) {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+    
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+    
+    lastX = xpos;
+    lastY = ypos;
+    
+    ProcessMouseMovement(xoffset, yoffset);
+}
+
+void Camera::HandleScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
 void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)

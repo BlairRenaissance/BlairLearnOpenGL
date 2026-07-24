@@ -10,7 +10,7 @@
 #include <iostream>
 
 #include "stb_image.h"
-#include "BaseFunction.hpp"
+#include "OpenGLContext.hpp"
 #include "Shader.hpp"
 #include "Model.h"
 #include "Light.hpp"
@@ -63,11 +63,12 @@ float cubeVertices[] = {
 
 int modelLoader() {
     GLFWwindow* window = CreateWindowContextWithParam(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL");
-    BaseFunction& baseFunction = BaseFunction::getInstance();
+    OpenGLContext& openGLContext = OpenGLContext::getInstance();
+    openGLContext.cameraEntity.BindToWindow(window);
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(window, BaseFunction::mouse_callback); // 鼠标移动回调函数
-    glfwSetScrollCallback(window, BaseFunction::scroll_callback);
+    glfwSetCursorPosCallback(window, Camera::mouse_callback); // 鼠标移动回调函数
+    glfwSetScrollCallback(window, Camera::scroll_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     Shader modelShader("Shader/7_modelLoader_vs.vert", "Shader/7_modelLoader_fs.frag");
@@ -94,9 +95,9 @@ int modelLoader() {
 
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = static_cast<float>(glfwGetTime());
-        baseFunction.cameraEntity.deltaTime = currentFrame - baseFunction.cameraEntity.lastFrame;
-        baseFunction.cameraEntity.lastFrame = currentFrame;
-        baseFunction.cameraEntity.ProcessInput(window, baseFunction.cameraEntity.deltaTime);
+        openGLContext.cameraEntity.deltaTime = currentFrame - openGLContext.cameraEntity.lastFrame;
+        openGLContext.cameraEntity.lastFrame = currentFrame;
+        openGLContext.cameraEntity.ProcessInput(window, openGLContext.cameraEntity.deltaTime);
 
         // 处理灯光相关按键
         lightManager.ProcessInput(window);
@@ -110,8 +111,8 @@ int modelLoader() {
 
         modelMat = glm::translate(modelMat, glm::vec3(0.0f, 0.0f, 0.0f));
         modelMat = glm::scale(modelMat, glm::vec3(1.0f, 1.0f, 1.0f));
-        viewMat = baseFunction.cameraEntity.GetViewMatrix();
-        projectionMat = glm::perspective(glm::radians(baseFunction.cameraEntity.fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); // 第二个参数是宽高比
+        viewMat = openGLContext.cameraEntity.GetViewMatrix();
+        projectionMat = glm::perspective(glm::radians(openGLContext.cameraEntity.fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); // 第二个参数是宽高比
 
         // 绘制模型
         modelShader.use();
@@ -121,7 +122,7 @@ int modelLoader() {
         glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgramID, "projection"), 1, 0, glm::value_ptr(projectionMat));
 
         // 使用LightManager设置光照相关uniform
-        lightManager.ApplyToObjectShader(modelShader, baseFunction.cameraEntity.worldPosition);
+        lightManager.ApplyToObjectShader(modelShader, openGLContext.cameraEntity.worldPosition);
 
     	model.Draw(modelShader);
 

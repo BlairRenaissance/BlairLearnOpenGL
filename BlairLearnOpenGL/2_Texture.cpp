@@ -11,7 +11,7 @@
 
 #include "stb_image.h"
 #include "Shader.hpp"
-#include "BaseFunction.hpp"
+#include "OpenGLContext.hpp"
 
 int texture()
 {

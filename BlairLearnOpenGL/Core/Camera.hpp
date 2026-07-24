@@ -59,12 +59,20 @@ public:
     // constructor with vectors
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yawAngle = YAW, float pitchAngle = PITCH);
     
+    void BindToWindow(GLFWwindow* window);
+    static void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
+    static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
     glm::mat4 GetViewMatrix();
     void ProcessMouseScroll(float yoffset);
     void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
     void ProcessInput(GLFWwindow *window, float deltaTime);
 
 private:
+    static Camera* GetCameraFromWindow(GLFWwindow* window);
+    void HandleMouseCallback(GLFWwindow* window, double xposIn, double yposIn);
+    void HandleScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+
     // calculates the front vector from the Camera's (updated) Euler Angles
     void UpdateCameraVectors();
     void ProcessKeyboard(CameraMovement direction, float deltaTime);

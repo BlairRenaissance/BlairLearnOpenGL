@@ -12,7 +12,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-#include "BaseFunction.hpp"
+#include "OpenGLContext.hpp"
 
 int hello_window() {
     

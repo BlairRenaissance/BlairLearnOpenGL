@@ -10,5 +10,5 @@ out vec3 texCoord;
 void main() {
     texCoord = aPos;
     vec4 pos = projection * view * vec4(aPos, 1.0);
-    gl_Position = pos.xyww;
+    gl_Position = pos.xyww; // 利用透视除法让天空盒z分量永远等于1.0
 }

@@ -13,17 +13,18 @@
 #include <iostream>
 
 #include "stb_image.h"
-#include "BaseFunction.hpp"
+#include "OpenGLContext.hpp"
 #include "Shader.hpp"
 #include "Light.hpp"
 
 int phongLight(){
     GLFWwindow* window = CreateWindowContextWithParam(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL");
-    BaseFunction& baseFunction = BaseFunction::getInstance();
+    OpenGLContext& openGLContext = OpenGLContext::getInstance();
+    openGLContext.cameraEntity.BindToWindow(window);
     
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(window, BaseFunction::mouse_callback);
-    glfwSetScrollCallback(window, BaseFunction::scroll_callback);
+    glfwSetCursorPosCallback(window, Camera::mouse_callback);
+    glfwSetScrollCallback(window, Camera::scroll_callback);
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
@@ -175,9 +176,9 @@ int phongLight(){
 
     while(!glfwWindowShouldClose(window)){
         float currentFrame = static_cast<float>(glfwGetTime());
-        baseFunction.cameraEntity.deltaTime = currentFrame - baseFunction.cameraEntity.lastFrame;
-        baseFunction.cameraEntity.lastFrame = currentFrame;
-        baseFunction.cameraEntity.ProcessInput(window, baseFunction.cameraEntity.deltaTime);
+        openGLContext.cameraEntity.deltaTime = currentFrame - openGLContext.cameraEntity.lastFrame;
+        openGLContext.cameraEntity.lastFrame = currentFrame;
+        openGLContext.cameraEntity.ProcessInput(window, openGLContext.cameraEntity.deltaTime);
 
         // 处理灯光相关按键
         lightManager.ProcessInput(window);
@@ -189,8 +190,8 @@ int phongLight(){
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
         
-        view = baseFunction.cameraEntity.GetViewMatrix();
-        projection = glm::perspective(glm::radians(baseFunction.cameraEntity.fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); // 第二个参数是宽高比
+        view = openGLContext.cameraEntity.GetViewMatrix();
+        projection = glm::perspective(glm::radians(openGLContext.cameraEntity.fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); // 第二个参数是宽高比
 
         // 绘制Cube
         cubeShader.use();
@@ -201,7 +202,7 @@ int phongLight(){
 
         glUniform1f(glGetUniformLocation(cubeShader.shaderProgramID, "material.shininess"), 64.0f);
         // 使用LightManager设置光照相关uniform
-        lightManager.ApplyToObjectShader(cubeShader, baseFunction.cameraEntity.worldPosition);
+        lightManager.ApplyToObjectShader(cubeShader, openGLContext.cameraEntity.worldPosition);
         
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, diffuseTexture);

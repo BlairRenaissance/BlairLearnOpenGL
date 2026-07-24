@@ -15,17 +15,18 @@
 #include <__filesystem/operations.h>
 
 #include "stb_image.h"
-#include "BaseFunction.hpp"
+#include "OpenGLContext.hpp"
 #include "Shader.hpp"
 
 int coordinate()
 {
     GLFWwindow* window = CreateWindowContext();
     
-    BaseFunction& baseFunction = BaseFunction::getInstance();
+    OpenGLContext& openGLContext = OpenGLContext::getInstance();
+    openGLContext.cameraEntity.BindToWindow(window);
     
-    glfwSetCursorPosCallback(window, BaseFunction::mouse_callback);
-    glfwSetScrollCallback(window, BaseFunction::scroll_callback);
+    glfwSetCursorPosCallback(window, Camera::mouse_callback);
+    glfwSetScrollCallback(window, Camera::scroll_callback);
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
@@ -122,9 +123,9 @@ int coordinate()
 #pragma mark 渲染loop
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = static_cast<float>(glfwGetTime());
-        baseFunction.cameraEntity.deltaTime = currentFrame - baseFunction.cameraEntity.lastFrame;
-        baseFunction.cameraEntity.lastFrame = currentFrame;
-        baseFunction.cameraEntity.ProcessInput(window, baseFunction.cameraEntity.deltaTime);
+        openGLContext.cameraEntity.deltaTime = currentFrame - openGLContext.cameraEntity.lastFrame;
+        openGLContext.cameraEntity.lastFrame = currentFrame;
+        openGLContext.cameraEntity.ProcessInput(window, openGLContext.cameraEntity.deltaTime);
         
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -139,8 +140,8 @@ int coordinate()
         glm::mat4 projection = glm::mat4(1.0f);
         
         model = glm::rotate(model, glm::radians(-55.f), glm::vec3(1.0f, 0.0f, 0.0f));
-        view =  baseFunction.cameraEntity.GetViewMatrix();
-        projection = glm::perspective(glm::radians(baseFunction.cameraEntity.fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); // 第二个参数是宽高比
+        view =  openGLContext.cameraEntity.GetViewMatrix();
+        projection = glm::perspective(glm::radians(openGLContext.cameraEntity.fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f); // 第二个参数是宽高比
 
         /*
          * 第一个参数是Uniform Location

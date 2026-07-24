@@ -1,11 +1,11 @@
 //
-//  BaseFunction.cpp
+//  OpenGLContext.cpp
 //  BlairLearnOpenGL
 //
 //  Created by yiwen ren on 2024/5/28.
 //
 
-#include "BaseFunction.hpp"
+#include "OpenGLContext.hpp"
 
 #include <iostream>
 #include <glad/glad.h>
@@ -80,28 +80,4 @@ GLFWwindow* CreateWindowContextWithParam(const unsigned int SCR_WIDTH, const uns
     
     return window;
 }
-
-void BaseFunction::HandleMouseCallback(GLFWwindow* window, double xposIn, double yposIn) {
-    float xpos = static_cast<float>(xposIn);
-    float ypos = static_cast<float>(yposIn);
-    
-    if (cameraEntity.firstMouse) {
-        cameraEntity.lastX = xpos;
-        cameraEntity.lastY = ypos;
-        cameraEntity.firstMouse = false;
-    }
-    
-    float xoffset = xpos - cameraEntity.lastX;
-    float yoffset = cameraEntity.lastY - ypos; // reversed since y-coordinates go from bottom to top
-    
-    cameraEntity.lastX = xpos;
-    cameraEntity.lastY = ypos;
-    
-    cameraEntity.ProcessMouseMovement(xoffset, yoffset);
-}
-
-void BaseFunction::HandleScrollCallback(GLFWwindow* window, double xoffset, double yoffset){
-    cameraEntity.ProcessMouseScroll(static_cast<float>(yoffset));
-}
-
 

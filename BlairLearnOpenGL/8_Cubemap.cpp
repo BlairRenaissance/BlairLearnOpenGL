@@ -2,10 +2,12 @@
 // Created by Blair Ren on 2025/11/27.
 //
 
-#include<iostream>
+#include <iostream>
+#include <string>
+#include <vector>
 #include <stb_image.h>
 
-#include "BaseFunction.hpp"
+#include "OpenGLContext.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
 #include "Model.h"
@@ -18,6 +20,7 @@ float skyboxVertices[] = {
 	1.0f, -1.0f, -1.0f,
 	1.0f, 1.0f, -1.0f,
 	-1.0f, 1.0f, -1.0f,
+
 	-1.0f, -1.0f, 1.0f,
 	-1.0f, -1.0f, -1.0f,
 	-1.0f, 1.0f, -1.0f,
@@ -61,7 +64,7 @@ unsigned int loadCubemap(const std::vector<std::string>& texturePaths) {
 
 	int width, height, nrChannels;
 	unsigned char* data;
-	for(unsigned int i = 0; i < texturePaths.size(); i++){
+	for(std::size_t i = 0; i < texturePaths.size(); i++){
 		data = stbi_load(texturePaths[i].c_str(), &width, &height, &nrChannels, 0);
 		if(data){
 			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -81,11 +84,12 @@ unsigned int loadCubemap(const std::vector<std::string>& texturePaths) {
 
 int cubemap() {
 	GLFWwindow *window = CreateWindowContextWithParam(SCR_WIDTH, SCR_HEIGHT, "Cubemap");
-	BaseFunction &baseFunction = BaseFunction::getInstance();
+	OpenGLContext &openGLContext = OpenGLContext::getInstance();
+	openGLContext.cameraEntity.BindToWindow(window);
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	glfwSetCursorPosCallback(window, BaseFunction::mouse_callback);
-	glfwSetScrollCallback(window, BaseFunction::scroll_callback);
+	glfwSetCursorPosCallback(window, Camera::mouse_callback);
+	glfwSetScrollCallback(window, Camera::scroll_callback);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	Shader skyShader("Shader/8_cubemap_vs.vert", "Shader/8_cubemap_fs.frag");
@@ -121,9 +125,9 @@ int cubemap() {
 
 	while (!glfwWindowShouldClose(window)) {
 		float currentFrame = static_cast<float>(glfwGetTime());
-		baseFunction.cameraEntity.deltaTime = currentFrame - baseFunction.cameraEntity.lastFrame;
-		baseFunction.cameraEntity.lastFrame = currentFrame;
-		baseFunction.cameraEntity.ProcessInput(window, baseFunction.cameraEntity.deltaTime);
+		openGLContext.cameraEntity.deltaTime = currentFrame - openGLContext.cameraEntity.lastFrame;
+		openGLContext.cameraEntity.lastFrame = currentFrame;
+		openGLContext.cameraEntity.ProcessInput(window, openGLContext.cameraEntity.deltaTime);
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -132,8 +136,8 @@ int cubemap() {
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
 		// 绘制天空盒Cubemap，只取旋转部分，不取平移部分
-		view = glm::mat4(glm::mat3(baseFunction.cameraEntity.GetViewMatrix()));
-		projection = glm::perspective(glm::radians(baseFunction.cameraEntity.fov), (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f); // 第二个参数是宽高比
+		view = glm::mat4(glm::mat3(openGLContext.cameraEntity.GetViewMatrix()));
+		projection = glm::perspective(glm::radians(openGLContext.cameraEntity.fov), (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f); // 第二个参数是宽高比
 		glUniformMatrix4fv(glGetUniformLocation(skyShader.shaderProgramID, "view"), 1, 0, glm::value_ptr(view));
 		glUniformMatrix4fv(glGetUniformLocation(skyShader.shaderProgramID, "projection"), 1, 0, glm::value_ptr(projection));
 
