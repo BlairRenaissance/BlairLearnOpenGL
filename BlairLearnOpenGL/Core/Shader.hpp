@@ -13,13 +13,13 @@
 class Shader{
 
 public:
-    unsigned int shaderProgramID;
     
     Shader(const char* vertexPath, const char* fragmentPath);
-    void use();
+    void use() const;
 
     void SetInt(const std::string &name, int value) const;
-    
+
+    unsigned int shaderProgramID = 0;
 };
 
 #endif /* Shader_hpp */

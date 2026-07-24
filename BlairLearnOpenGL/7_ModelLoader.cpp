@@ -120,10 +120,11 @@ int modelLoader() {
         glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgramID, "view"), 1, 0, glm::value_ptr(viewMat));
         glUniformMatrix4fv(glGetUniformLocation(modelShader.shaderProgramID, "projection"), 1, 0, glm::value_ptr(projectionMat));
 
-        model.Draw(modelShader);
-
         // 使用LightManager设置光照相关uniform
         lightManager.ApplyToObjectShader(modelShader, baseFunction.cameraEntity.worldPosition);
+
+    	model.Draw(modelShader);
+
         // 绘制灯光立方体
         if (lightManager.showLightBox) {
             lightShader.use();

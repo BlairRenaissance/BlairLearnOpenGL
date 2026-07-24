@@ -112,7 +112,7 @@ int cubemap() {
 	unsigned int textureID = loadCubemap(texturePaths);
 
 	skyShader.use();
-	glUniform1f(glGetUniformLocation(skyShader.shaderProgramID, "skybox"), 0);
+	glUniform1i(glGetUniformLocation(skyShader.shaderProgramID, "skybox"), 0);
 	glEnable(GL_DEPTH_TEST);
 	// 开启背面剔除
 	glEnable(GL_CULL_FACE);
@@ -152,6 +152,11 @@ int cubemap() {
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteTextures(1, &textureID);
+	glfwTerminate();
 
 	return 0;
 }
