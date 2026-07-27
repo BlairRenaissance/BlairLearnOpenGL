@@ -8,12 +8,13 @@
 #include "Camera.hpp"
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yawAngle, float pitchAngle) 
-:frontDir(glm::vec3(0.0f, 0.0f, -1.0f)),
+:worldPosition(position),
+ Position(worldPosition),
+ frontDir(glm::vec3(0.0f, 0.0f, -1.0f)),
  movementSpeed(SPEED)
 {
     yaw = yawAngle;
     pitch = pitchAngle;
-    worldPosition = position;
     worldUp = up;
     UpdateCameraVectors();
 }
@@ -54,6 +55,10 @@ void Camera::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 glm::mat4 Camera::GetViewMatrix(){
     return glm::lookAt(worldPosition, worldPosition + frontDir, upDir);
+}
+
+glm::mat4 Camera::GetProjectionMatrix(float aspectRatio, float nearPlane, float farPlane) const {
+    return glm::perspective(glm::radians(fov), aspectRatio, nearPlane, farPlane);
 }
 
 void Camera::UpdateCameraVectors()

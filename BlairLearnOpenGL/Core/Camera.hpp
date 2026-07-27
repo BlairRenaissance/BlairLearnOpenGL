@@ -41,6 +41,7 @@ public:
     // camera Attributes
     glm::vec3 worldUp;
     glm::vec3 worldPosition;
+    glm::vec3& Position;
     glm::vec3 frontDir;
     glm::vec3 rightDir;
     glm::vec3 upDir;
@@ -64,6 +65,7 @@ public:
     static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
     glm::mat4 GetViewMatrix();
+    glm::mat4 GetProjectionMatrix(float aspectRatio = static_cast<float>(SCR_WIDTH) / static_cast<float>(SCR_HEIGHT), float nearPlane = 0.1f, float farPlane = 100.0f) const;
     void ProcessMouseScroll(float yoffset);
     void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
     void ProcessInput(GLFWwindow *window, float deltaTime);

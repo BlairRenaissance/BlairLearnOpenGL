@@ -8,7 +8,7 @@
 #include <vector>
 #include <string>
 #include "Shader.hpp"
-#include "Mesh.h"
+#include "Mesh.hpp"
 #include "assimp/Importer.hpp"
 #include "assimp/scene.h"
 #include "assimp/material.h"

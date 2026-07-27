@@ -10,6 +10,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 
 Shader::Shader(const char* vertexPath, const char* fragmentPath){
     std::string vertexCode;
@@ -68,6 +69,22 @@ void Shader::use() const {
     glUseProgram(shaderProgramID);
 }
 
-void Shader::SetInt(const std::string &name, int value) const {
+void Shader::setInt(const std::string &name, int value) const {
     glUniform1i(glGetUniformLocation(shaderProgramID, name.c_str()), value);
+}
+
+void Shader::SetInt(const std::string &name, int value) const {
+    setInt(name, value);
+}
+
+void Shader::setMat4(const std::string &name, const glm::mat4 &mat) const {
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgramID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+void Shader::setVec3(const std::string &name, const glm::vec3 &value) const {
+    glUniform3fv(glGetUniformLocation(shaderProgramID, name.c_str()), 1, glm::value_ptr(value));
+}
+
+void Shader::setVec3(const std::string &name, float x, float y, float z) const {
+    glUniform3f(glGetUniformLocation(shaderProgramID, name.c_str()), x, y, z);
 }

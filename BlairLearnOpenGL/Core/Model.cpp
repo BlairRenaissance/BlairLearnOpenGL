@@ -8,7 +8,7 @@
 #include <iostream>
 
 #include "Shader.hpp"
-#include "Mesh.h"
+#include "Mesh.hpp"
 #include "Camera.hpp"
 
 #include "stb_image.h"
