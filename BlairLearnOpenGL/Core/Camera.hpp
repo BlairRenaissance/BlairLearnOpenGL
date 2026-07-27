@@ -41,7 +41,6 @@ public:
     // camera Attributes
     glm::vec3 worldUp;
     glm::vec3 worldPosition;
-    glm::vec3& Position;
     glm::vec3 frontDir;
     glm::vec3 rightDir;
     glm::vec3 upDir;

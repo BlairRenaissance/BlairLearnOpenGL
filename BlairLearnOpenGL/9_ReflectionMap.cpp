@@ -142,7 +142,7 @@ int reflectionMap() {
 		modelShader.setMat4("model", glm::mat4(1.0f));
 		modelShader.setMat4("view", view);
 		modelShader.setMat4("projection", projection);
-		modelShader.setVec3("cameraPos", openGLContext.cameraEntity.Position);
+		modelShader.setVec3("cameraPos", openGLContext.cameraEntity.worldPosition);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 		model.Draw(modelShader);
